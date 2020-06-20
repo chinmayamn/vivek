@@ -1,0 +1,113 @@
+﻿<%@ Page Language="C#" MasterPageFile="~/user.master" AutoEventWireup="true" CodeFile="careers.aspx.cs" Inherits="careers" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+ <!-- Top Right 	-->
+        <div id="top-right">
+        	
+            <!-- Menus	-->
+            <div id="smoothmenu1" class="ddsmoothmenu">
+            	<ul>
+                	<li><a href="home.aspx" title="Home">Home</a></li>
+                    <li><a href="aboutus.aspx" title="About us">About us</a>
+                    	<ul>
+                            <li><a href="aboutus.aspx" title="About School">About School</a></li>
+                    		<li><a href="about-team.aspx" title="Our Team">Our Team</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="methodology.aspx" title="Our Methodology">Our Methodology</a></li>
+                    <li><a href="our-advantages.aspx" title="Our Advantage">Our Advantage</a></li>
+                    <li><a href="infrastructure.aspx" title="Our Infrastructure">Our Infrastructure</a>
+                    	<ul>
+                            <li><a href="campus.aspx" title="Campus">Campus</a></li>
+                    		<li><a href="library.aspx" title="Library">Library</a></li>
+                    		<li><a href="laboratory.aspx" title="Laboratory">Laboratory</a></li>
+                    		<li><a href="infirmary.aspx" title="Infirmary">Infirmary</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="careers.aspx" title="Careers">Careers</a></li>
+                    <li><a href="contactus.aspx" title="Contact us">Contact us</a></li>
+                </ul>
+            </div>
+            <!-- End of Menus	-->
+            <div class="clear"></div>
+            <!-- Banner	-->
+            <div id="banner">
+            	<img src="images/careers.jpg" width="716" height="296" alt="" />
+            </div>
+            <!-- End of Banner	-->
+            
+        </div>
+        <!-- End of Top Right 	-->
+
+ <!-- Content	-->
+        <div id="content">
+        	
+            <div class="cent">
+                <asp:Label ID="Label1" runat="server" ></asp:Label>
+                <br /><br />
+                
+                <table cellpadding="0" cellspacing="0" border="0" class="careers">
+                	<tr class="bold">
+                    	<td colspan="2">Please use the below form to build your career with us.</td>
+                    </tr>
+                    <tr>
+                    	<td width="150">Name :</td>
+                    	<td width="450">
+                   
+                            <asp:TextBox ID="TextBox1" runat="server" class="car" ValidationGroup="v1" ></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" 
+                                ErrorMessage="Name required" ValidationGroup="v1" ControlToValidate="TextBox1">*</asp:RequiredFieldValidator>
+                    	
+                    	</td>
+                    </tr>
+                    <tr class="dark">
+                    	<td>E-mail :</td>
+                    	<td>
+                    	
+                    	 <asp:TextBox ID="TextBox2" runat="server" class="car" ValidationGroup="v1" ></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Email id required" Text="*" ControlToValidate="TextBox2" ValidationGroup="v1"></asp:RequiredFieldValidator>
+                            <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" 
+                                ErrorMessage="Invalid email id" ValidationGroup="v1" 
+                                ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" 
+                                ControlToValidate="TextBox2">*</asp:RegularExpressionValidator>
+                    	</td>
+                    </tr>
+                    <tr>
+                    	<td>Address :</td>
+                    	<td>
+                    	 <asp:TextBox ID="TextBox3" runat="server" class="car" ValidationGroup="v1" ></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="Address required" ControlToValidate="TextBox3" ValidationGroup="v1" Text="*"></asp:RequiredFieldValidator>
+                    	</td>
+                    </tr>
+                    <tr class="dark">
+                    	<td>Upload CV :</td>
+                    	<td>
+                    	
+                            <asp:FileUpload ID="FileUpload1" runat="server" class="car" />
+                    	    <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" 
+                                ControlToValidate="FileUpload1" ErrorMessage="CV required" ValidationGroup="v1">*</asp:RequiredFieldValidator>
+                    	</td>
+                    </tr>	
+                    <tr>
+                    	<td>
+                            <asp:ValidationSummary ID="ValidationSummary1" runat="server" 
+                                ShowMessageBox="True" ShowSummary="False" ValidationGroup="v1" />
+                        </td>
+                        <td>
+                      
+                            <asp:Button ID="Button1" runat="server" Text="Submit" class="btns" 
+                                onclick="Button1_Click" ValidationGroup="v1"/>
+                            &nbsp;&nbsp;
+                            <input type="reset" value="Reset" class="btns" />
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            
+        </div>
+        <!-- End of Content	-->
+</asp:Content>
+

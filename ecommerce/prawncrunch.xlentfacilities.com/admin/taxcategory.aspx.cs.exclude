@@ -1,0 +1,126 @@
+﻿using System;
+using System.Collections;
+using System.Configuration;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Xml.Linq;
+using System.Data.SqlClient;
+public partial class admin_taxvategory : System.Web.UI.Page
+{
+    admin ad = new admin();
+    MessageBox msg = new MessageBox();
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!Page.IsPostBack)
+        {
+
+
+            Button1.Visible = true;
+            Button2.Visible = false;
+
+            fillgrid();
+           // fillcity();
+
+            if (Request.QueryString["id"] != null)
+            {
+                edits();
+            }
+        
+
+        }
+
+    }
+
+    public void edits()
+    {
+        int id= Convert.ToInt32(Request.QueryString["id"]);
+        DataSet ds = ad.gettaxbyid(id);
+        TextBox1.Text = ds.Tables[0].Rows[0]["shipping"].ToString();
+ 
+        TextBox2.Text = ds.Tables[0].Rows[0]["tax"].ToString();
+        Button1.Visible = false;
+        Button2.Visible = true;
+    }
+    public void fillgrid()
+    {
+        DataSet ds = ad.gettax();
+        if (ds.Tables[0].Rows.Count == 0)
+        {
+            Label1.Visible = true;
+            GridView1.Visible = false;
+
+        }
+        else
+        {
+            Label1.Visible = false;
+            GridView1.Visible = true;
+            GridView1.DataSource = ds;
+            GridView1.DataBind();
+                
+        }
+    }
+    //public void fillcity()
+    //{
+    //    DataSet ds = ad.getcity();
+    //    if (ds.Tables[0].Rows.Count == 0)
+    //    {
+
+    //        DropDownList1.Enabled = false;
+
+    //    }
+    //    else
+    //    {
+
+    //        DropDownList1.Enabled = true;
+    //        DropDownList1.DataSource = ds;
+    //        DropDownList1.DataTextField = ds.Tables[0].Columns["cityname"].ToString();
+    //        DropDownList1.DataValueField = ds.Tables[0].Columns["id"].ToString();
+
+    //        DropDownList1.DataBind(); DropDownList1.Items.Insert(0, "Select");
+    //    }
+    //}
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+       string city =DropDownList1.SelectedItem.Value.ToString();
+        double shipping = Convert.ToDouble( TextBox1.Text);
+        double tax = Convert.ToDouble( TextBox2.Text);
+        ad.inserttax(city, shipping, tax);
+        msg.Show("Tax and shipping added successfully");
+        TextBox1.Text = "";
+        TextBox2.Text = "";
+        fillgrid();
+    }
+    protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+        int id = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Value);
+        ad.deletetax(id);
+        msg.Show("Tax/shipping deleted successfully");
+        fillgrid();
+
+
+    }
+    protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        GridView1.PageIndex = e.NewPageIndex;
+        fillgrid();
+    }
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+        int id = Convert.ToInt32(Request.QueryString["id"]);
+        string city = DropDownList1.SelectedItem.Value.ToString();
+        double shipping = Convert.ToDouble(TextBox1.Text);
+        double tax = Convert.ToDouble(TextBox2.Text);
+        ad.updatetax(id,city, shipping, tax);
+        msg.Show("Tax and shipping updated successfully");
+        TextBox1.Text = "";
+        TextBox2.Text = "";
+        fillgrid();
+    }
+}

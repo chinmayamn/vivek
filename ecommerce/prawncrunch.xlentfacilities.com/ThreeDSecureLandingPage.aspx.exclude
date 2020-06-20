@@ -1,0 +1,23 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ThreeDSecureLandingPage.aspx.cs" Inherits="MyCompanyName.ThreeDSecureLandingPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title>Untitled Page</title>
+    <link href="CSS/StyleSheet.css" rel="stylesheet" type="text/css" />
+</head>
+<body id="BodyTag11" runat="server">
+    <form name="Form" method="post" action="<%= m_szFormAction %>" target="_parent">
+        <input type="hidden" name="PaRES" value="<%= m_szPaRES %>" />
+        <input type="hidden" name="CrossReference" value="<%= m_szCrossReference %>" />
+    </form>
+    <form id="form1222" runat="server" target="_parent">
+        <div>
+            <asp:Panel ID="pnMessagePanel" runat="server" Visible="false" CssClass="ErrorMessage">
+                <asp:Label ID="lbMessageLabel" runat="server" Text="Label" />   
+            </asp:Panel>
+        </div>
+    </form>
+</body>
+</html>

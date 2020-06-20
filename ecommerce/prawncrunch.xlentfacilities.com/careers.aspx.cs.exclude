@@ -1,0 +1,136 @@
+﻿using System;
+using System.Collections;
+using System.Configuration;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Xml.Linq;
+using System.Data.SqlClient;
+using System.Net.Mail;
+public partial class careers : System.Web.UI.Page
+{
+    admin ad = new admin();
+    MessageBox msg = new MessageBox();
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!Page.IsPostBack)
+        {
+            DataSet ds = ad.checkfortype("careers");
+
+            if (ds.Tables[0].Rows.Count == 0)
+            {
+            }
+
+            else
+            {
+                Label1.Text = Server.HtmlDecode(ds.Tables[0].Rows[0]["contents"].ToString());
+            }
+
+        }
+
+    }
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        string mto = "";
+        string mFrom = "";
+        {
+           // mto = "info@redhillshigh.com";
+             mto = "chinmayamn@gmail.com";
+            string mto1 = "redhillshigh@gmail.com";
+
+            // Email : info@redhillshigh.com / redhillshigh@gmail.com
+            mFrom = TextBox2.Text;
+
+
+
+
+             string UniqueName = (DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString());
+                string ImageFile1 = string.Empty;
+
+                if (FileUpload1.PostedFile.ContentLength > 0)
+                {
+                    string temp = System.IO.Path.GetExtension(FileUpload1.PostedFile.FileName);
+                    if (temp == ".pdf" || temp == ".PDF" || temp == ".doc" || temp == ".DOC" || temp == ".docx" || temp == ".DOCX")
+                    {
+
+
+                        string z;
+                        string x = Server.MapPath("~\\uploads") + "\\";
+                        string s = System.IO.Path.GetFileName(FileUpload1.PostedFile.FileName);
+                        string[] words = s.Split('.');
+                        z = x + UniqueName + s;//file extension
+                        FileUpload1.PostedFile.SaveAs(z);
+                        string urldet = "~\\" + "uploads" + "\\" + UniqueName + s;
+                        ImageFile1 = urldet.Replace("\\", "/");
+                        string ups = ImageFile1.Replace("~", "http://redhillshigh.com");
+
+
+
+
+                        if (mto != "" && mFrom != "")
+                        {
+
+                            MailMessage message = new MailMessage();
+                            message.From = new MailAddress(mFrom);
+                            message.To.Add(mto);
+                            message.To.Add(mto1);
+
+                            message.IsBodyHtml = true;
+
+
+                            string temp1 = "Name: " + TextBox1.Text + " <br><br> " + "Email: " + TextBox2.Text + "<br> <br> " + "Address: " + TextBox3.Text + "<br><br>" + "CV Link:" + ups;
+                            message.Body = temp1;
+                            message.Subject = "Career enquiry from Red Hills Website";
+
+                            SmtpClient smtp = new SmtpClient("localhost", 25);
+
+                            smtp.Send(message);
+                            message.Dispose();
+
+
+
+
+                            MessageBox msg1 = new MessageBox();
+                            msg1.Show("We have recieved your query, will get back to you at the earliest");
+                            TextBox1.Text = "";
+                            TextBox2.Text = "";
+                            TextBox3.Text = "";
+
+
+
+                        }
+
+                        else
+                        {
+                            MessageBox msg2 = new MessageBox();
+                            msg2.Show("Send feed back again after some time");
+
+                        }
+
+                    }
+                    else
+                    {
+                        msg.Show("Only documents and pdf allowed");
+                    }
+
+                }
+
+
+
+
+
+
+
+
+
+            }
+        }
+    
+}
+ 
+

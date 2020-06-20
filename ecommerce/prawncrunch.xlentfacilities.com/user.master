@@ -1,0 +1,191 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="user.master.cs" Inherits="user" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server"><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>FARM FRESH PRAWNS</title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <script type="text/javascript" src="js/scrolling.js"></script>
+    <link type="text/css" href="date/jquery-ui-1.7.2.custom.css" rel="stylesheet" />
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="date/ui.core.js"></script>
+	<script type="text/javascript" src="date/ui.datepicker.js"></script>
+	<link type="text/css" href="date/demos.css" rel="stylesheet" />
+	<script type="text/javascript">
+	$(function() {
+		$('#datepicker').datepicker({
+			changeMonth: true,
+			changeYear: true
+		});
+	});
+	</script>
+	
+	
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="images/logo.ico" rel="shortcut icon" />
+<!-- Banner Script	-->
+
+	
+	
+<link rel="stylesheet" href="slides/nivo-slider.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="slides/style.css" type="text/css" media="screen" /><script type="text/javascript" src="slides/jquery-1.4.3.min.js"></script>
+    <script type="text/javascript" src="slides/jquery.nivo.slider.pack.js"></script>
+    <script type="text/javascript">
+    $(window).load(function() {
+        $('#slider').nivoSlider();
+    });
+    </script>
+<!-- End of Banner	Script	-->
+
+
+
+
+</head>
+
+<body >
+   
+    <form id="form1" runat="server"> 
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+</asp:ScriptManager>
+<div id="i1" runat="server" style=" background-color:red">
+
+<%--<div id="topbar"  >
+    <asp:Repeater ID="Repeater1" runat="server">
+ <ItemTemplate>
+ 
+
+    <span class="close" onclick="document.getElementById('topbar').style.display='none';"></span>
+    <img src=<%#Eval("pimage")%> id="i1" runat="server" alt="" />
+    <h1>Discounts Upto<br />
+        <a href=product-details.aspx?id=<%#Eval("id2") %>&s=1>Click Here</a>
+    </h1>
+    <h2><%#Eval("discount")%>%</h2>
+    <h3><%#Eval("pname")%> <br /><%#Eval("text") %></h3>  </ItemTemplate>  </asp:Repeater>
+</div>
+--%>
+
+
+</div>
+    <div id="wrapper">
+
+	<!-- Logo Navigation	-->
+    <div class="full">
+        <div id="logo-cen">
+            <div id="logo-nav">
+            	<a href="index.aspx" title="FARM FRESH PRAWNS"><img src="images/logo.jpg" width="897" height="160" alt="FARM FRESH PRAWNS" /></a>
+            </div>
+        </div>
+    </div>
+    <!-- End of Logo Navigation	-->
+    
+    <!-- Menus -->
+    <div class="full menu-bg">
+    	<div id="menu-cen">
+        	<div id="menus">
+            	<ul>
+            	
+                 
+                 <!-- login view-->
+                
+                 <!-- menu-->
+                <li id="l1" runat="server"><a href="index.aspx" title="Home" >Home</a></li>
+                    <li ><a href="freshprawn.aspx" title="Why Farm Fresh Prawn" class="" id="l2" runat="server">Why Farm Fresh Prawn</a></li>
+                    <li ><a href="cookingprawn.aspx" title="How to buy online" class="" id="l3" runat="server">How to buy online</a></li>
+                 <%--   <li><a href="freshcrunch.aspx" title="Quality Policy" id="l4" runat="server" class="" >Quality Policy</a></li>
+                      <li ><a href="privacy-policy.aspx" title="Privacy Policy" id="l5" runat="server" class="">Privacy Policy</a></li>
+                 --%>    
+                    <li ><a href="aboutus.aspx" title="About us" id="l6" runat="server" class="">About us</a></li>
+                    <li ><a href="contactus.aspx" title="Contact us" id="l7" runat="server" class="">Contact us</a></li>
+                       
+                     
+                   
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- End of Menus	-->
+      <div class="full" style="background:#dadcda;">
+   	<div id="menu-cen1">
+        	<div id="menus1">
+        		<ul>
+                	<li><font color="white">Hello</font>
+						<asp:LoginView ID="LoginView1" runat="server">
+							<AnonymousTemplate>
+								<span style=" font-weight:bold; color:#990033;">Guest</span>
+							</AnonymousTemplate>
+							<LoggedInTemplate>
+								<span style="font-weight:bold; color:#990033;"><asp:Label ForeColor="White" ID="Label1" runat="server" Text="Label"></asp:Label></span>
+							</LoggedInTemplate>
+            			</asp:LoginView>
+					</li>
+					<li>
+						 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+						 <ContentTemplate>
+							 <a href="Cart.aspx"  style="border:none;"><asp:Label ID="Label3" runat="server" Text=""></asp:Label></a>
+						 </ContentTemplate>
+						 </asp:UpdatePanel>
+                   	</li>
+                   	
+                   	 <li id="span1" runat="server"><a href="myprofile.aspx" title="My Profile">My Profile</a></li>
+					   <li id="span2" runat="server"><a href="order-history.aspx" title="Order History">Order History</a></li>
+                     <li><asp:LoginStatus ID="LoginStatus1" runat="server"  LoginText="Sign&nbsp;In" LogoutAction="Redirect"  LogoutText="Sign&nbsp;Out" onloggedout="LoginStatus1_LoggedOut" onloggingout="LoginStatus1_LoggingOut" /></li>
+                  			
+					  
+       </ul>
+        
+    </div>
+    </div>
+    </div>
+    <!-- Banner -->
+   
+    
+  
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+  
+   <div class="full foot-bg">
+    	<div id="footer">
+        	<div id="foot">
+            	<ul>
+                   	<li><a href="index.aspx" title="Home">Home</a></li>
+                    <li><a href="freshprawn.aspx" title="Why Farm Fresh Prawn">Why Farm Fresh Prawn</a></li>
+                    <li><a href="cookingprawn.aspx" title="How to buy online">How to buy online</a></li>
+               <%--     <li><a href="freshcrunch.aspx" title="Why Fresh Crunch">Why Fresh Crunch</a></li>--%>
+                    <li><a href="aboutus.aspx" title="About us">About us</a></li>
+                    <li><a href="contactus.aspx" title="Contact us">Contact us</a></li>
+                      <li><a href="privacy-policy.aspx" title="Privacy Policy">Privacy Policy</a></li>
+                      <li><a href="return-policy.aspx" title="Return Policy">Return Policy</a></li>
+                       <li><a href="terms-conditions.aspx" title="Terms & Conditions">Terms & Conditions</a></li>
+                </ul>
+                
+                <p class="copy">
+                
+                  &copy; Copy Rights Reserved By FarmFreshPrawns.com
+<div id="fb-root" style="float:left" ></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+<div class="fb-like" style="float:left" data-href="http://www.facebook.com/FreshPrawnsOnline" data-send="true" data-width="50" data-show-faces="true"></div>
+                       </p>
+                       
+                 
+                  <p class="powered">Powered by <a href="http://www.xlentfacilities.com" target="_blank">Xlent Facilities</a></p>
+            </div>
+        </div>
+    </div>
+    <!-- End of Footer	-->
+
+</div>
+</form>
+</body>
+</html>

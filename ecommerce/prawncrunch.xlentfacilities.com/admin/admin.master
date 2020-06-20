@@ -1,0 +1,94 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="admin.master.cs" Inherits="admin_admin" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>FARM FRESH PRAWNS</title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../images/logo.ico" rel="shortcut icon" />
+<!-- Banner Script	-->
+<link rel="stylesheet" href="../slides/nivo-slider.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../slides/style.css" type="text/css" media="screen" /><script type="text/javascript" src="slides/jquery-1.4.3.min.js"></script>
+    <script type="text/javascript" src="../slides/jquery.nivo.slider.pack.js"></script>
+    <script type="text/javascript">
+    $(window).load(function() {
+        $('#slider').nivoSlider();
+    });
+    </script>
+<!-- End of Banner	Script	-->
+</head>
+
+<body>
+    <form id="form1" runat="server">
+    <div id="wrapper">
+
+	<!-- Logo Navigation	-->
+    <div class="full">
+        <div id="logo-cen">
+            <div id="logo-nav">
+            	<a href="#" title="FARM FRESH PRAWNS"><img src="../images/logo.jpg" width="897" height="160" alt="FARM FRESH PRAWNS" /></a>
+            </div>
+        </div>
+    </div>
+      <!-- Menus -->
+    <div class="full menu-bg">
+    	<div id="menu-cen">
+        	<div id="menus">
+            	<ul>
+                	<li><a href="category.aspx" title="category" >Category</a></li>
+                	<li><a href="product.aspx" title="product" >Product</a></li>
+                		
+                	  <li><a href="place.aspx" title="place">Prices</a></li>
+                	<li><a href="orders.aspx" title="orders" >Orders</a></li>
+                
+                 <li><a href="cms.aspx" title="News">News</a></li>
+                    <li><a href="allcms.aspx" title="CMS">CMS</a></li>
+                 <li><a href="offer.aspx" title="Offers">Offers</a></li>
+                    <li><a href="discount.aspx" title="discount">Discount</a></li>
+                    <li><a href="users.aspx" title="users">Users</a></li>
+                        <li>
+                            <asp:LinkButton ID="LinkButton1" runat="server" onclick="LinkButton1_Click">Log Out</asp:LinkButton></li>
+                   
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- End of Menus	-->
+    <!-- End of Logo Navigation	-->
+    
+    <div class="full mid-bg">
+    	<div id="cont-mid">
+        	<div id="content">
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+          </div>
+        </div>
+    </div>
+    
+    
+    <div class="full foot-bg">
+    	<div id="footer">
+        	<div id="foot">
+            	<%--<ul>
+                	<li><a href="index.aspx" title="Home">Home</a></li>
+                    <li><a href="#" title="Why Farm Fresh Prawn">Why Farm Fresh Prawn</a></li>
+                    <li><a href="#" title="Cooking the Perfect Prawn">Cooking the Perfect Prawn</a></li>
+                    <li><a href="#" title="Why Fresh Crunch">Why Fresh Crunch</a></li>
+                    <li><a href="#" title="About us">About us</a></li>
+                    <li><a href="#" title="Contact us">Contact us</a></li>
+                </ul>
+                --%>
+                <p class="copy">&copy; Copy Rights Reserved By  FarmFreshPrawns.com</p>
+                <p class="powered">Powered by <a href="http://www.xlentfacilities.com" target="_blank">Xlent Facilities</a></p>
+            </div>
+        </div>
+    </div>
+    <!-- End of Footer	-->
+
+</div>
+</form>
+</body>
+</html>

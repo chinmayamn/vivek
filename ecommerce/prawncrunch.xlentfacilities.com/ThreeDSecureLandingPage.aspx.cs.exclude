@@ -1,0 +1,37 @@
+using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+
+namespace MyCompanyName
+{
+    public partial class ThreeDSecureLandingPage : System.Web.UI.Page
+    {
+        protected internal string m_szCrossReference;
+        protected internal string m_szPaRES;
+        protected internal string m_szFormAction;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (Request.Form["MD"] != null &&
+                Request.Form["PaRes"] != null)
+            {
+                m_szFormAction = Global.SiteSecureBaseURL + "PaymentForm.aspx";
+                m_szPaRES = ThePaymentGateway.Common.SharedFunctions.StripAllWhitespace(Request.Form["PaRes"]);
+                m_szCrossReference = Request.Form["MD"];
+                BodyTag.Attributes.Add("onload", "document.Form.submit();");
+            }
+            else
+            {
+                pnMessagePanel.Visible = true;
+                lbMessageLabel.Text = "There were errors collecting the responses back from the ACS";
+            }
+        }
+    }
+}
