@@ -1,0 +1,1458 @@
+{% extends "master.html" %}
+{% block content %}
+<div id="body" >
+	<div class="row">
+		<div class="col-md-2">
+			<table class="dataframe">
+				{% for key,value in profile_html.items %}         
+				<tr> 
+					<td>{{key}}</td>
+					<td>{{value}}</td>
+				</tr>    
+				{% endfor %}
+			</table>
+		
+		</div>
+		<div class="col-md-8" >		
+			<ul class="nav nav-pills sticky-top" id="navbar-example2" > 
+				<li class="nav-item">
+				  <a class="nav-link active"  href="#scrollspyHeading1">Characteristics</a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link"  href="#scrollspyHeading2">Ashtakavarga</a>
+				</li>
+			</ul>
+		
+			<div class="row"  >
+				<div class="col-md-12" data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0"  tabindex="0">
+					<div id="scrollspyHeading1" >
+						<div class="card mb-2">
+							<div class="card-header bg-info bg-gradient text-white">Rashi characteristics</div>
+							<div class="card-body">{{details|safe}}</div> 						
+						</div>
+						<div class="card mb-2">
+							<div class="card-header bg-danger bg-gradient text-white">Lagna characteristics</div>
+							<div class="card-body">Content</div> 						
+						</div>
+						<div class="card mb-2">
+							<div class="card-header bg-secondary bg-gradient text-white">Nakshatra characteristics</div>
+							<div class="card-body">Content</div> 						
+						</div>
+						<div class="card mb-2">
+							<div class="card-header bg-warning bg-gradient text-white">Tithi characteristics</div>
+							<div class="card-body">Content</div> 						
+						</div>
+						<div class="card mb-2">
+							<div class="card-header bg-primary bg-gradient text-white">Yoga characteristics</div>
+							<div class="card-body">{{yoga|safe}}</div> 						
+						</div>
+						<div class="card mb-2">
+							<div class="card-header bg-success bg-gradient text-white">Karana characteristics</div>
+							<div class="card-body">{{karana|safe}}</div> 						
+						</div>
+						<div class="card mb-2">
+							<div class="card-header bg-info bg-gradient text-white">Day characteristics</div>
+							<div class="card-body">Content</div> 						
+						</div>
+					</div>
+					  
+					<div id="scrollspyHeading2" >
+						<div class="card mb-2">
+							<div class="card-header bg-success bg-gradient text-white">Surya Binnashtaka varga</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-9">
+										{{su_p|safe}}
+									</div>
+									<div class="col-md-3">										
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{su_p_n.0.11}}</td>
+													<td style="width:30px !important">{{su_p_n.0.0}}</td>
+													<td style="width:30px !important">{{su_p_n.0.1}}</td>
+													<td style="width:30px !important">{{su_p_n.0.2}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{su_p_n.0.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{su_p_n.0.12}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{su_p_n.0.3}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{su_p_n.0.9}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{su_p_n.0.4}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{su_p_n.0.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{su_p_n.0.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{su_p_n.0.6}}</td>
+												  <td style="width:60px !important;height:60px !important">{{su_p_n.0.5}}</td>
+												</tr>
+											</tbody>
+										</table>	
+										<b>Calculation</b> : 
+											{% if su_p_n.1 %}
+												<span style="color:royalblue;font-weight:bold">Correct</span>		
+											{% else %}
+												<span class="blink">Incorrect</span>	
+											{% endif %}																									
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<br/><span><b>Sun signication : </b>Father, government, health</span>	
+									</div>
+								</div>								
+							</div> 						
+						</div>	
+						<div class="card mb-2">
+							<div class="card-header bg-danger bg-gradient text-white">Chandra Binnashtaka varga</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-9">
+										{{ch_p|safe}}
+									</div>
+									<div class="col-md-3">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{ch_p_n.0.11}}</td>
+													<td style="width:30px !important">{{ch_p_n.0.0}}</td>
+													<td style="width:30px !important">{{ch_p_n.0.1}}</td>
+													<td style="width:30px !important">{{ch_p_n.0.2}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{ch_p_n.0.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{ch_p_n.0.12}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{ch_p_n.0.3}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{ch_p_n.0.9}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{ch_p_n.0.4}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{ch_p_n.0.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ch_p_n.0.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ch_p_n.0.6}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ch_p_n.0.5}}</td>
+												</tr>
+											</tbody>
+										</table>
+										<b>Calculation</b> : 
+											{% if su_p_n.1 %}
+												<span style="color:royalblue;font-weight:bold">Correct</span>		
+											{% else %}
+												<span class="blink">Incorrect</span>	
+											{% endif %}								
+									</div>
+								</div>	
+								<div class="row">
+									<div class="col-md-12">
+										<br/><span><b>Moon signication : </b>Mother, mind, eye</span>	
+									</div>
+								</div>			
+							</div> 						
+						</div>	
+						<div class="card mb-2">
+							<div class="card-header bg-secondary bg-gradient text-white">Mangala Binnashtaka varga</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-9">
+										{{kj_p|safe}}
+									</div>
+									<div class="col-md-3">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{kj_p_n.0.11}}</td>
+													<td style="width:30px !important">{{kj_p_n.0.0}}</td>
+													<td style="width:30px !important">{{kj_p_n.0.1}}</td>
+													<td style="width:30px !important">{{kj_p_n.0.2}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{kj_p_n.0.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{kj_p_n.0.12}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{kj_p_n.0.3}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{kj_p_n.0.9}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{kj_p_n.0.4}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{kj_p_n.0.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{kj_p_n.0.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{kj_p_n.0.6}}</td>
+												  <td style="width:60px !important;height:60px !important">{{kj_p_n.0.5}}</td>
+												</tr>
+											</tbody>
+										</table>	
+										<b>Calculation</b> : 
+											{% if su_p_n.1 %}
+												<span style="color:royalblue;font-weight:bold">Correct</span>		
+											{% else %}
+												<span class="blink">Incorrect</span>	
+											{% endif %}							
+									</div>
+								</div>	
+								<div class="row">
+									<div class="col-md-12">
+										<br/><span><b>Mars signication : </b>Siblings, courage, property</span>	
+									</div>
+								</div>			
+							</div> 						
+						</div>	
+						<div class="card mb-2">
+							<div class="card-header bg-dark bg-gradient text-white">Budha Binnashtaka varga</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-9">
+										{{bd_p|safe}}
+									</div>
+									<div class="col-md-3">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{bd_p_n.0.11}}</td>
+													<td style="width:30px !important">{{bd_p_n.0.0}}</td>
+													<td style="width:30px !important">{{bd_p_n.0.1}}</td>
+													<td style="width:30px !important">{{bd_p_n.0.2}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{bd_p_n.0.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{bd_p_n.0.12}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{bd_p_n.0.3}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{bd_p_n.0.9}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{bd_p_n.0.4}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{bd_p_n.0.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{bd_p_n.0.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{bd_p_n.0.6}}</td>
+												  <td style="width:60px !important;height:60px !important">{{bd_p_n.0.5}}</td>
+												</tr>
+											</tbody>
+										</table>	
+										<b>Calculation</b> : 
+											{% if su_p_n.1 %}
+												<span style="color:royalblue;font-weight:bold">Correct</span>		
+											{% else %}
+												<span class="blink">Incorrect</span>	
+											{% endif %}							
+									</div>
+								</div>	
+								<div class="row">
+									<div class="col-md-12">
+										<br/><span><b>Mercury signication : </b>Business, intelligence, education</span>	
+									</div>
+								</div>			
+							</div> 						
+						</div>	
+						<div class="card mb-2">
+							<div class="card-header bg-warning bg-gradient text-white">Guru Binnashtaka varga</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-9">
+										{{gu_p|safe}}
+									</div>
+									<div class="col-md-3">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{gu_p_n.0.11}}</td>
+													<td style="width:30px !important">{{gu_p_n.0.0}}</td>
+													<td style="width:30px !important">{{gu_p_n.0.1}}</td>
+													<td style="width:30px !important">{{gu_p_n.0.2}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{gu_p_n.0.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{gu_p_n.0.12}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{gu_p_n.0.3}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{gu_p_n.0.9}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{gu_p_n.0.4}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{gu_p_n.0.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{gu_p_n.0.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{gu_p_n.0.6}}</td>
+												  <td style="width:60px !important;height:60px !important">{{gu_p_n.0.5}}</td>
+												</tr>
+											</tbody>
+										</table>
+										<b>Calculation</b> : 
+											{% if su_p_n.1 %}
+												<span style="color:royalblue;font-weight:bold">Correct</span>		
+											{% else %}
+												<span class="blink">Incorrect</span>	
+											{% endif %}								
+									</div>
+								</div>	
+								<div class="row">
+									<div class="col-md-12">
+										<br/><span><b>Jupiter signication : </b>Children, knowledge, money, religion</span>	
+									</div>
+								</div>			
+							</div> 						
+						</div>	
+						<div class="card mb-2">
+							<div class="card-header bg-success bg-gradient text-white">Shukra Binnashtaka varga</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-9">
+										{{sk_p|safe}}
+									</div>
+									<div class="col-md-3">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{sk_p_n.0.11}}</td>
+													<td style="width:30px !important">{{sk_p_n.0.0}}</td>
+													<td style="width:30px !important">{{sk_p_n.0.1}}</td>
+													<td style="width:30px !important">{{sk_p_n.0.2}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{sk_p_n.0.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{sk_p_n.0.12}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{sk_p_n.0.3}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{sk_p_n.0.9}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{sk_p_n.0.4}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{sk_p_n.0.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{sk_p_n.0.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{sk_p_n.0.6}}</td>
+												  <td style="width:60px !important;height:60px !important">{{sk_p_n.0.5}}</td>
+												</tr>
+											</tbody>
+										</table>	
+										<b>Calculation</b> : 
+											{% if su_p_n.1 %}
+												<span style="color:royalblue;font-weight:bold">Correct</span>		
+											{% else %}
+												<span class="blink">Incorrect</span>	
+											{% endif %}							
+									</div>
+								</div>	
+								<div class="row">
+									<div class="col-md-12">
+										<br/><span><b>Venus signication : </b>Vehicle, spouse, luxury, marriage</span>	
+									</div>
+								</div>			
+							</div> 						
+						</div>	
+						<div class="card mb-2">
+							<div class="card-header bg-info bg-gradient text-white">Shani Binnashtaka varga</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-9">
+										{{sn_p|safe}}
+									</div>
+									<div class="col-md-3">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{sn_p_n.0.11}}</td>
+													<td style="width:30px !important">{{sn_p_n.0.0}}</td>
+													<td style="width:30px !important">{{sn_p_n.0.1}}</td>
+													<td style="width:30px !important">{{sn_p_n.0.2}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{sn_p_n.0.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{sn_p_n.0.12}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{sn_p_n.0.3}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{sn_p_n.0.9}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{sn_p_n.0.4}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{sn_p_n.0.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{sn_p_n.0.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{sn_p_n.0.6}}</td>
+												  <td style="width:60px !important;height:60px !important">{{sn_p_n.0.5}}</td>
+												</tr>
+											</tbody>
+										</table>
+										<b>Calculation</b> : 
+											{% if su_p_n.1 %}
+												<span style="color:royalblue;font-weight:bold">Correct</span>		
+											{% else %}
+												<span class="blink">Incorrect</span>	
+											{% endif %}								
+									</div>
+								</div>	
+								<div class="row">
+									<div class="col-md-12">
+										<br/><span><b>Saturn signication : </b>Employment, longevity, servant</span>	
+									</div>
+								</div>			
+							</div> 						
+						</div>	
+						<div class="card mb-2">
+							<div class="card-header bg-success bg-gradient text-white">Sarvashtaka varga</div>		
+							<div class="card-body">				
+								<div class="row">
+									<div class="col-md-9">
+										{{sarva|safe}}
+									</div>
+									<div class="col-md-3">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{sarva_p_n.0.11}}</td>
+													<td style="width:30px !important">{{sarva_p_n.0.0}}</td>
+													<td style="width:30px !important">{{sarva_p_n.0.1}}</td>
+													<td style="width:30px !important">{{sarva_p_n.0.2}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{sarva_p_n.0.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{sarva_p_n.0.12}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{sarva_p_n.0.3}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{sarva_p_n.0.9}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{sarva_p_n.0.4}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{sarva_p_n.0.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{sarva_p_n.0.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{sarva_p_n.0.6}}</td>
+												  <td style="width:60px !important;height:60px !important">{{sarva_p_n.0.5}}</td>
+												</tr>
+											</tbody>
+										</table>		
+										<b>Calculation</b> : 
+											{% if su_p_n.1 %}
+												<span style="color:royalblue;font-weight:bold">Correct</span>		
+											{% else %}
+												<span class="blink">Incorrect</span>	
+											{% endif %}						
+									</div>
+								</div>	
+							</div>		
+						</div>
+						<div class="card mb-2">
+							<div class="card-header bg-warning bg-gradient text-white">Surya Trikona Shodhana</div>		
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-9">
+											<table class="table table-bordered dataframe">
+												<tbody> 	
+													<tr>	
+														<th></th><th>1</th><th>5</th><th>9</th><th>2</th><th>6</th><th>10</th><th>3</th><th>7</th><th>11</th><th>4</th><th>8</th><th>12</th>
+													</tr>
+													<tr>
+														<th>Surya</th>
+														<td>{{ekadi_df.0.Surya.1}}</td>
+														<td>{{ekadi_df.0.Surya.5}}</td>
+														<td>{{ekadi_df.0.Surya.9}}</td>
+														<td>{{ekadi_df.0.Surya.2}}</td>
+														<td>{{ekadi_df.0.Surya.6}}</td>
+														<td>{{ekadi_df.0.Surya.10}}</td>
+														<td>{{ekadi_df.0.Surya.3}}</td>
+														<td>{{ekadi_df.0.Surya.7}}</td>
+														<td>{{ekadi_df.0.Surya.11}}</td>
+														<td>{{ekadi_df.0.Surya.4}}</td>
+														<td>{{ekadi_df.0.Surya.8}}</td>
+														<td>{{ekadi_df.0.Surya.12}}</td>
+													</tr>
+													<tr>
+														<th>Diff</th>
+														<td>{{ekadi_df.0.Surya_diff.1}}</td>
+														<td>{{ekadi_df.0.Surya_diff.5}}</td>
+														<td>{{ekadi_df.0.Surya_diff.9}}</td>
+														<td>{{ekadi_df.0.Surya_diff.2}}</td>
+														<td>{{ekadi_df.0.Surya_diff.6}}</td>
+														<td>{{ekadi_df.0.Surya_diff.10}}</td>
+														<td>{{ekadi_df.0.Surya_diff.3}}</td>
+														<td>{{ekadi_df.0.Surya_diff.7}}</td>
+														<td>{{ekadi_df.0.Surya_diff.11}}</td>
+														<td>{{ekadi_df.0.Surya_diff.4}}</td>
+														<td>{{ekadi_df.0.Surya_diff.8}}</td>
+														<td>{{ekadi_df.0.Surya_diff.12}}</td>
+													</tr>
+													<tr>
+														<th>Result</th>
+														<td>{{ekadi_df.0.Surya_result.1}}</td>
+														<td>{{ekadi_df.0.Surya_result.5}}</td>
+														<td>{{ekadi_df.0.Surya_result.9}}</td>
+														<td>{{ekadi_df.0.Surya_result.2}}</td>
+														<td>{{ekadi_df.0.Surya_result.6}}</td>
+														<td>{{ekadi_df.0.Surya_result.10}}</td>
+														<td>{{ekadi_df.0.Surya_result.3}}</td>
+														<td>{{ekadi_df.0.Surya_result.7}}</td>
+														<td>{{ekadi_df.0.Surya_result.11}}</td>
+														<td>{{ekadi_df.0.Surya_result.4}}</td>
+														<td>{{ekadi_df.0.Surya_result.8}}</td>
+														<td>{{ekadi_df.0.Surya_result.12}}</td>
+													</tr>
+												</tbody>
+											</table>								
+									</div>
+									<div class="col-md-3">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{ekadi_df.0.Surya_result.12}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Surya_result.1}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Surya_result.2}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Surya_result.3}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Surya_result.11}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{ekadi_df.1}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{ekadi_df.0.Surya_result.4}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Surya_result.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Surya_result.5}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Surya_result.9}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Surya_result.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Surya_result.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Surya_result.6}}</td>
+												</tr>
+											</tbody>
+										</table>		
+										<b>Calculation</b> : 
+											{% if su_p_n.1 %}
+												<span style="color:royalblue;font-weight:bold">Correct</span>		
+											{% else %}
+												<span class="blink">Incorrect</span>	
+											{% endif %}						
+									</div>
+								</div>	
+							</div>		
+						</div>
+						<div class="card mb-2">
+							<div class="card-header bg-success bg-gradient text-white">Chandra Trikona Shodhana</div>		
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-9">
+											<table class="table table-bordered dataframe">
+												<tbody> 	
+													<tr>	
+														<th></th><th>1</th><th>5</th><th>9</th><th>2</th><th>6</th><th>10</th><th>3</th><th>7</th><th>11</th><th>4</th><th>8</th><th>12</th>
+													</tr>
+													<tr>
+														<th>Chandra</th>
+														<td>{{ekadi_df.0.Chandra.1}}</td>
+														<td>{{ekadi_df.0.Chandra.5}}</td>
+														<td>{{ekadi_df.0.Chandra.9}}</td>
+														<td>{{ekadi_df.0.Chandra.2}}</td>
+														<td>{{ekadi_df.0.Chandra.6}}</td>
+														<td>{{ekadi_df.0.Chandra.10}}</td>
+														<td>{{ekadi_df.0.Chandra.3}}</td>
+														<td>{{ekadi_df.0.Chandra.7}}</td>
+														<td>{{ekadi_df.0.Chandra.11}}</td>
+														<td>{{ekadi_df.0.Chandra.4}}</td>
+														<td>{{ekadi_df.0.Chandra.8}}</td>
+														<td>{{ekadi_df.0.Chandra.12}}</td>
+													</tr>
+													<tr>
+														<th>Diff</th>
+														<td>{{ekadi_df.0.Chandra_diff.1}}</td>
+														<td>{{ekadi_df.0.Chandra_diff.5}}</td>
+														<td>{{ekadi_df.0.Chandra_diff.9}}</td>
+														<td>{{ekadi_df.0.Chandra_diff.2}}</td>
+														<td>{{ekadi_df.0.Chandra_diff.6}}</td>
+														<td>{{ekadi_df.0.Chandra_diff.10}}</td>
+														<td>{{ekadi_df.0.Chandra_diff.3}}</td>
+														<td>{{ekadi_df.0.Chandra_diff.7}}</td>
+														<td>{{ekadi_df.0.Chandra_diff.11}}</td>
+														<td>{{ekadi_df.0.Chandra_diff.4}}</td>
+														<td>{{ekadi_df.0.Chandra_diff.8}}</td>
+														<td>{{ekadi_df.0.Chandra_diff.12}}</td>
+													</tr>
+													<tr>
+														<th>Result</th>
+														<td>{{ekadi_df.0.Chandra_result.1}}</td>
+														<td>{{ekadi_df.0.Chandra_result.5}}</td>
+														<td>{{ekadi_df.0.Chandra_result.9}}</td>
+														<td>{{ekadi_df.0.Chandra_result.2}}</td>
+														<td>{{ekadi_df.0.Chandra_result.6}}</td>
+														<td>{{ekadi_df.0.Chandra_result.10}}</td>
+														<td>{{ekadi_df.0.Chandra_result.3}}</td>
+														<td>{{ekadi_df.0.Chandra_result.7}}</td>
+														<td>{{ekadi_df.0.Chandra_result.11}}</td>
+														<td>{{ekadi_df.0.Chandra_result.4}}</td>
+														<td>{{ekadi_df.0.Chandra_result.8}}</td>
+														<td>{{ekadi_df.0.Chandra_result.12}}</td>
+													</tr>
+												</tbody>
+											</table>								
+									</div>
+									<div class="col-md-3">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{ekadi_df.0.Chandra_result.12}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Chandra_result.1}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Chandra_result.2}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Chandra_result.3}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Chandra_result.11}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{ekadi_df.2}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{ekadi_df.0.Chandra_result.4}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Chandra_result.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Chandra_result.5}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Chandra_result.9}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Chandra_result.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Chandra_result.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Chandra_result.6}}</td>
+												</tr>
+											</tbody>
+										</table>		
+										<b>Calculation</b> : 
+											{% if su_p_n.1 %}
+												<span style="color:royalblue;font-weight:bold">Correct</span>		
+											{% else %}
+												<span class="blink">Incorrect</span>	
+											{% endif %}						
+									</div>
+								</div>	
+							</div>		
+						</div>
+						<div class="card mb-2">
+							<div class="card-header bg-secondary bg-gradient text-white">Kuja Trikona Shodhana</div>		
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-9">
+											<table class="table table-bordered dataframe">
+												<tbody> 	
+													<tr>	
+														<th></th><th>1</th><th>5</th><th>9</th><th>2</th><th>6</th><th>10</th><th>3</th><th>7</th><th>11</th><th>4</th><th>8</th><th>12</th>
+													</tr>
+													<tr>
+														<th>Kuja</th>
+														<td>{{ekadi_df.0.Kuja.1}}</td>
+														<td>{{ekadi_df.0.Kuja.5}}</td>
+														<td>{{ekadi_df.0.Kuja.9}}</td>
+														<td>{{ekadi_df.0.Kuja.2}}</td>
+														<td>{{ekadi_df.0.Kuja.6}}</td>
+														<td>{{ekadi_df.0.Kuja.10}}</td>
+														<td>{{ekadi_df.0.Kuja.3}}</td>
+														<td>{{ekadi_df.0.Kuja.7}}</td>
+														<td>{{ekadi_df.0.Kuja.11}}</td>
+														<td>{{ekadi_df.0.Kuja.4}}</td>
+														<td>{{ekadi_df.0.Kuja.8}}</td>
+														<td>{{ekadi_df.0.Kuja.12}}</td>
+													</tr>
+													<tr>
+														<th>Diff</th>
+														<td>{{ekadi_df.0.Kuja_diff.1}}</td>
+														<td>{{ekadi_df.0.Kuja_diff.5}}</td>
+														<td>{{ekadi_df.0.Kuja_diff.9}}</td>
+														<td>{{ekadi_df.0.Kuja_diff.2}}</td>
+														<td>{{ekadi_df.0.Kuja_diff.6}}</td>
+														<td>{{ekadi_df.0.Kuja_diff.10}}</td>
+														<td>{{ekadi_df.0.Kuja_diff.3}}</td>
+														<td>{{ekadi_df.0.Kuja_diff.7}}</td>
+														<td>{{ekadi_df.0.Kuja_diff.11}}</td>
+														<td>{{ekadi_df.0.Kuja_diff.4}}</td>
+														<td>{{ekadi_df.0.Kuja_diff.8}}</td>
+														<td>{{ekadi_df.0.Kuja_diff.12}}</td>
+													</tr>
+													<tr>
+														<th>Result</th>
+														<td>{{ekadi_df.0.Kuja_result.1}}</td>
+														<td>{{ekadi_df.0.Kuja_result.5}}</td>
+														<td>{{ekadi_df.0.Kuja_result.9}}</td>
+														<td>{{ekadi_df.0.Kuja_result.2}}</td>
+														<td>{{ekadi_df.0.Kuja_result.6}}</td>
+														<td>{{ekadi_df.0.Kuja_result.10}}</td>
+														<td>{{ekadi_df.0.Kuja_result.3}}</td>
+														<td>{{ekadi_df.0.Kuja_result.7}}</td>
+														<td>{{ekadi_df.0.Kuja_result.11}}</td>
+														<td>{{ekadi_df.0.Kuja_result.4}}</td>
+														<td>{{ekadi_df.0.Kuja_result.8}}</td>
+														<td>{{ekadi_df.0.Kuja_result.12}}</td>
+													</tr>
+												</tbody>
+											</table>								
+									</div>
+									<div class="col-md-3">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{ekadi_df.0.Kuja_result.12}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Kuja_result.1}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Kuja_result.2}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Kuja_result.3}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Kuja_result.11}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{ekadi_df.3}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{ekadi_df.0.Kuja_result.4}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Kuja_result.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Kuja_result.5}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Kuja_result.9}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Kuja_result.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Kuja_result.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Kuja_result.6}}</td>
+												</tr>
+											</tbody>
+										</table>		
+										<b>Calculation</b> : 
+											{% if su_p_n.1 %}
+												<span style="color:royalblue;font-weight:bold">Correct</span>		
+											{% else %}
+												<span class="blink">Incorrect</span>	
+											{% endif %}						
+									</div>
+								</div>	
+							</div>		
+						</div>
+						<div class="card mb-2">
+							<div class="card-header bg-warning bg-gradient text-white">Budha Trikona Shodhana</div>		
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-9">
+											<table class="table table-bordered dataframe">
+												<tbody> 	
+													<tr>	
+														<th></th><th>1</th><th>5</th><th>9</th><th>2</th><th>6</th><th>10</th><th>3</th><th>7</th><th>11</th><th>4</th><th>8</th><th>12</th>
+													</tr>
+													<tr>
+														<th>Budha</th>
+														<td>{{ekadi_df.0.Budha.1}}</td>
+														<td>{{ekadi_df.0.Budha.5}}</td>
+														<td>{{ekadi_df.0.Budha.9}}</td>
+														<td>{{ekadi_df.0.Budha.2}}</td>
+														<td>{{ekadi_df.0.Budha.6}}</td>
+														<td>{{ekadi_df.0.Budha.10}}</td>
+														<td>{{ekadi_df.0.Budha.3}}</td>
+														<td>{{ekadi_df.0.Budha.7}}</td>
+														<td>{{ekadi_df.0.Budha.11}}</td>
+														<td>{{ekadi_df.0.Budha.4}}</td>
+														<td>{{ekadi_df.0.Budha.8}}</td>
+														<td>{{ekadi_df.0.Budha.12}}</td>
+													</tr>
+													<tr>
+														<th>Diff</th>
+														<td>{{ekadi_df.0.Budha_diff.1}}</td>
+														<td>{{ekadi_df.0.Budha_diff.5}}</td>
+														<td>{{ekadi_df.0.Budha_diff.9}}</td>
+														<td>{{ekadi_df.0.Budha_diff.2}}</td>
+														<td>{{ekadi_df.0.Budha_diff.6}}</td>
+														<td>{{ekadi_df.0.Budha_diff.10}}</td>
+														<td>{{ekadi_df.0.Budha_diff.3}}</td>
+														<td>{{ekadi_df.0.Budha_diff.7}}</td>
+														<td>{{ekadi_df.0.Budha_diff.11}}</td>
+														<td>{{ekadi_df.0.Budha_diff.4}}</td>
+														<td>{{ekadi_df.0.Budha_diff.8}}</td>
+														<td>{{ekadi_df.0.Budha_diff.12}}</td>
+													</tr>
+													<tr>
+														<th>Result</th>
+														<td>{{ekadi_df.0.Budha_result.1}}</td>
+														<td>{{ekadi_df.0.Budha_result.5}}</td>
+														<td>{{ekadi_df.0.Budha_result.9}}</td>
+														<td>{{ekadi_df.0.Budha_result.2}}</td>
+														<td>{{ekadi_df.0.Budha_result.6}}</td>
+														<td>{{ekadi_df.0.Budha_result.10}}</td>
+														<td>{{ekadi_df.0.Budha_result.3}}</td>
+														<td>{{ekadi_df.0.Budha_result.7}}</td>
+														<td>{{ekadi_df.0.Budha_result.11}}</td>
+														<td>{{ekadi_df.0.Budha_result.4}}</td>
+														<td>{{ekadi_df.0.Budha_result.8}}</td>
+														<td>{{ekadi_df.0.Budha_result.12}}</td>
+													</tr>
+												</tbody>
+											</table>								
+									</div>
+									<div class="col-md-3">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{ekadi_df.0.Budha_result.12}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Budha_result.1}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Budha_result.2}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Budha_result.3}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Budha_result.11}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{ekadi_df.4}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{ekadi_df.0.Budha_result.4}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Budha_result.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Budha_result.5}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Budha_result.9}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Budha_result.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Budha_result.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Budha_result.6}}</td>
+												</tr>
+											</tbody>
+										</table>		
+										<b>Calculation</b> : 
+											{% if su_p_n.1 %}
+												<span style="color:royalblue;font-weight:bold">Correct</span>		
+											{% else %}
+												<span class="blink">Incorrect</span>	
+											{% endif %}						
+									</div>
+								</div>	
+							</div>		
+						</div>
+						<div class="card mb-2">
+							<div class="card-header bg-warning bg-gradient text-white">Guru Trikona Shodhana</div>		
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-9">
+											<table class="table table-bordered dataframe">
+												<tbody> 	
+													<tr>	
+														<th></th><th>1</th><th>5</th><th>9</th><th>2</th><th>6</th><th>10</th><th>3</th><th>7</th><th>11</th><th>4</th><th>8</th><th>12</th>
+													</tr>
+													<tr>
+														<th>Guru</th>
+														<td>{{ekadi_df.0.Guru.1}}</td>
+														<td>{{ekadi_df.0.Guru.5}}</td>
+														<td>{{ekadi_df.0.Guru.9}}</td>
+														<td>{{ekadi_df.0.Guru.2}}</td>
+														<td>{{ekadi_df.0.Guru.6}}</td>
+														<td>{{ekadi_df.0.Guru.10}}</td>
+														<td>{{ekadi_df.0.Guru.3}}</td>
+														<td>{{ekadi_df.0.Guru.7}}</td>
+														<td>{{ekadi_df.0.Guru.11}}</td>
+														<td>{{ekadi_df.0.Guru.4}}</td>
+														<td>{{ekadi_df.0.Guru.8}}</td>
+														<td>{{ekadi_df.0.Guru.12}}</td>
+													</tr>
+													<tr>
+														<th>Diff</th>
+														<td>{{ekadi_df.0.Guru_diff.1}}</td>
+														<td>{{ekadi_df.0.Guru_diff.5}}</td>
+														<td>{{ekadi_df.0.Guru_diff.9}}</td>
+														<td>{{ekadi_df.0.Guru_diff.2}}</td>
+														<td>{{ekadi_df.0.Guru_diff.6}}</td>
+														<td>{{ekadi_df.0.Guru_diff.10}}</td>
+														<td>{{ekadi_df.0.Guru_diff.3}}</td>
+														<td>{{ekadi_df.0.Guru_diff.7}}</td>
+														<td>{{ekadi_df.0.Guru_diff.11}}</td>
+														<td>{{ekadi_df.0.Guru_diff.4}}</td>
+														<td>{{ekadi_df.0.Guru_diff.8}}</td>
+														<td>{{ekadi_df.0.Guru_diff.12}}</td>
+													</tr>
+													<tr>
+														<th>Result</th>
+														<td>{{ekadi_df.0.Guru_result.1}}</td>
+														<td>{{ekadi_df.0.Guru_result.5}}</td>
+														<td>{{ekadi_df.0.Guru_result.9}}</td>
+														<td>{{ekadi_df.0.Guru_result.2}}</td>
+														<td>{{ekadi_df.0.Guru_result.6}}</td>
+														<td>{{ekadi_df.0.Guru_result.10}}</td>
+														<td>{{ekadi_df.0.Guru_result.3}}</td>
+														<td>{{ekadi_df.0.Guru_result.7}}</td>
+														<td>{{ekadi_df.0.Guru_result.11}}</td>
+														<td>{{ekadi_df.0.Guru_result.4}}</td>
+														<td>{{ekadi_df.0.Guru_result.8}}</td>
+														<td>{{ekadi_df.0.Guru_result.12}}</td>
+													</tr>
+												</tbody>
+											</table>								
+									</div>
+									<div class="col-md-3">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{ekadi_df.0.Guru_result.12}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Guru_result.1}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Guru_result.2}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Guru_result.3}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Guru_result.11}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{ekadi_df.5}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{ekadi_df.0.Guru_result.4}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Guru_result.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Guru_result.5}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Guru_result.9}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Guru_result.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Guru_result.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Guru_result.6}}</td>
+												</tr>
+											</tbody>
+										</table>		
+										<b>Calculation</b> : 
+											{% if su_p_n.1 %}
+												<span style="color:royalblue;font-weight:bold">Correct</span>		
+											{% else %}
+												<span class="blink">Incorrect</span>	
+											{% endif %}						
+									</div>
+								</div>	
+							</div>		
+						</div>
+						<div class="card mb-2">
+							<div class="card-header bg-warning bg-gradient text-white">Shukra Trikona Shodhana</div>		
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-9">
+											<table class="table table-bordered dataframe">
+												<tbody> 	
+													<tr>	
+														<th></th><th>1</th><th>5</th><th>9</th><th>2</th><th>6</th><th>10</th><th>3</th><th>7</th><th>11</th><th>4</th><th>8</th><th>12</th>
+													</tr>
+													<tr>
+														<th>Shukra</th>
+														<td>{{ekadi_df.0.Shukra.1}}</td>
+														<td>{{ekadi_df.0.Shukra.5}}</td>
+														<td>{{ekadi_df.0.Shukra.9}}</td>
+														<td>{{ekadi_df.0.Shukra.2}}</td>
+														<td>{{ekadi_df.0.Shukra.6}}</td>
+														<td>{{ekadi_df.0.Shukra.10}}</td>
+														<td>{{ekadi_df.0.Shukra.3}}</td>
+														<td>{{ekadi_df.0.Shukra.7}}</td>
+														<td>{{ekadi_df.0.Shukra.11}}</td>
+														<td>{{ekadi_df.0.Shukra.4}}</td>
+														<td>{{ekadi_df.0.Shukra.8}}</td>
+														<td>{{ekadi_df.0.Shukra.12}}</td>
+													</tr>
+													<tr>
+														<th>Diff</th>
+														<td>{{ekadi_df.0.Shukra_diff.1}}</td>
+														<td>{{ekadi_df.0.Shukra_diff.5}}</td>
+														<td>{{ekadi_df.0.Shukra_diff.9}}</td>
+														<td>{{ekadi_df.0.Shukra_diff.2}}</td>
+														<td>{{ekadi_df.0.Shukra_diff.6}}</td>
+														<td>{{ekadi_df.0.Shukra_diff.10}}</td>
+														<td>{{ekadi_df.0.Shukra_diff.3}}</td>
+														<td>{{ekadi_df.0.Shukra_diff.7}}</td>
+														<td>{{ekadi_df.0.Shukra_diff.11}}</td>
+														<td>{{ekadi_df.0.Shukra_diff.4}}</td>
+														<td>{{ekadi_df.0.Shukra_diff.8}}</td>
+														<td>{{ekadi_df.0.Shukra_diff.12}}</td>
+													</tr>
+													<tr>
+														<th>Result</th>
+														<td>{{ekadi_df.0.Shukra_result.1}}</td>
+														<td>{{ekadi_df.0.Shukra_result.5}}</td>
+														<td>{{ekadi_df.0.Shukra_result.9}}</td>
+														<td>{{ekadi_df.0.Shukra_result.2}}</td>
+														<td>{{ekadi_df.0.Shukra_result.6}}</td>
+														<td>{{ekadi_df.0.Shukra_result.10}}</td>
+														<td>{{ekadi_df.0.Shukra_result.3}}</td>
+														<td>{{ekadi_df.0.Shukra_result.7}}</td>
+														<td>{{ekadi_df.0.Shukra_result.11}}</td>
+														<td>{{ekadi_df.0.Shukra_result.4}}</td>
+														<td>{{ekadi_df.0.Shukra_result.8}}</td>
+														<td>{{ekadi_df.0.Shukra_result.12}}</td>
+													</tr>
+												</tbody>
+											</table>								
+									</div>
+									<div class="col-md-3">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{ekadi_df.0.Shukra_result.12}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shukra_result.1}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shukra_result.2}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shukra_result.3}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shukra_result.11}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{ekadi_df.6}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{ekadi_df.0.Shukra_result.4}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shukra_result.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shukra_result.5}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shukra_result.9}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shukra_result.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shukra_result.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shukra_result.6}}</td>
+												</tr>
+											</tbody>
+										</table>		
+										<b>Calculation</b> : 
+											{% if su_p_n.1 %}
+												<span style="color:royalblue;font-weight:bold">Correct</span>		
+											{% else %}
+												<span class="blink">Incorrect</span>	
+											{% endif %}						
+									</div>
+								</div>	
+							</div>		
+						</div>
+						<div class="card mb-2">
+							<div class="card-header bg-warning bg-gradient text-white">Shani Trikona Shodhana</div>		
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-9">
+											<table class="table table-bordered dataframe">
+												<tbody> 	
+													<tr>	
+														<th></th><th>1</th><th>5</th><th>9</th><th>2</th><th>6</th><th>10</th><th>3</th><th>7</th><th>11</th><th>4</th><th>8</th><th>12</th>
+													</tr>
+													<tr>
+														<th>Shani</th>
+														<td>{{ekadi_df.0.Shani.1}}</td>
+														<td>{{ekadi_df.0.Shani.5}}</td>
+														<td>{{ekadi_df.0.Shani.9}}</td>
+														<td>{{ekadi_df.0.Shani.2}}</td>
+														<td>{{ekadi_df.0.Shani.6}}</td>
+														<td>{{ekadi_df.0.Shani.10}}</td>
+														<td>{{ekadi_df.0.Shani.3}}</td>
+														<td>{{ekadi_df.0.Shani.7}}</td>
+														<td>{{ekadi_df.0.Shani.11}}</td>
+														<td>{{ekadi_df.0.Shani.4}}</td>
+														<td>{{ekadi_df.0.Shani.8}}</td>
+														<td>{{ekadi_df.0.Shani.12}}</td>
+													</tr>
+													<tr>
+														<th>Diff</th>
+														<td>{{ekadi_df.0.Shani_diff.1}}</td>
+														<td>{{ekadi_df.0.Shani_diff.5}}</td>
+														<td>{{ekadi_df.0.Shani_diff.9}}</td>
+														<td>{{ekadi_df.0.Shani_diff.2}}</td>
+														<td>{{ekadi_df.0.Shani_diff.6}}</td>
+														<td>{{ekadi_df.0.Shani_diff.10}}</td>
+														<td>{{ekadi_df.0.Shani_diff.3}}</td>
+														<td>{{ekadi_df.0.Shani_diff.7}}</td>
+														<td>{{ekadi_df.0.Shani_diff.11}}</td>
+														<td>{{ekadi_df.0.Shani_diff.4}}</td>
+														<td>{{ekadi_df.0.Shani_diff.8}}</td>
+														<td>{{ekadi_df.0.Shani_diff.12}}</td>
+													</tr>
+													<tr>
+														<th>Result</th>
+														<td>{{ekadi_df.0.Shani_result.1}}</td>
+														<td>{{ekadi_df.0.Shani_result.5}}</td>
+														<td>{{ekadi_df.0.Shani_result.9}}</td>
+														<td>{{ekadi_df.0.Shani_result.2}}</td>
+														<td>{{ekadi_df.0.Shani_result.6}}</td>
+														<td>{{ekadi_df.0.Shani_result.10}}</td>
+														<td>{{ekadi_df.0.Shani_result.3}}</td>
+														<td>{{ekadi_df.0.Shani_result.7}}</td>
+														<td>{{ekadi_df.0.Shani_result.11}}</td>
+														<td>{{ekadi_df.0.Shani_result.4}}</td>
+														<td>{{ekadi_df.0.Shani_result.8}}</td>
+														<td>{{ekadi_df.0.Shani_result.12}}</td>
+													</tr>
+												</tbody>
+											</table>								
+									</div>
+									<div class="col-md-3">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.12}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.1}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.2}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.3}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shani_result.11}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{ekadi_df.7}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{ekadi_df.0.Shani_result.4}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shani_result.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.5}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.9}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.6}}</td>
+												</tr>
+											</tbody>
+										</table>		
+										<b>Calculation</b> : 
+											{% if su_p_n.1 %}
+												<span style="color:royalblue;font-weight:bold">Correct</span>		
+											{% else %}
+												<span class="blink">Incorrect</span>	
+											{% endif %}						
+									</div>
+								</div>	
+							</div>		
+						</div>
+						<div class="card mb-2">
+							<div class="card-header bg-info bg-gradient text-white">Ekadipathya Shodhana</div>		
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-4">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.12}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.1}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.2}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.3}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shani_result.11}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">Surya {{ekadi_df.7}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{ekadi_df.0.Shani_result.4}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shani_result.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.5}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.9}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.6}}</td>
+												</tr>
+											</tbody>
+										</table>		
+									</div>
+									<div class="col-md-4">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.12}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.1}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.2}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.3}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shani_result.11}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{ekadi_df.7}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{ekadi_df.0.Shani_result.4}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shani_result.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.5}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.9}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.6}}</td>
+												</tr>
+											</tbody>
+										</table>		
+									</div>
+									<div class="col-md-4">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.12}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.1}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.2}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.3}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shani_result.11}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{ekadi_df.7}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{ekadi_df.0.Shani_result.4}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shani_result.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.5}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.9}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.6}}</td>
+												</tr>
+											</tbody>
+										</table>		
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.12}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.1}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.2}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.3}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shani_result.11}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{ekadi_df.7}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{ekadi_df.0.Shani_result.4}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shani_result.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.5}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.9}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.6}}</td>
+												</tr>
+											</tbody>
+										</table>		
+									</div>
+									<div class="col-md-4">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.12}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.1}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.2}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.3}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shani_result.11}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{ekadi_df.7}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{ekadi_df.0.Shani_result.4}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shani_result.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.5}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.9}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.6}}</td>
+												</tr>
+											</tbody>
+										</table>		
+									</div>
+									<div class="col-md-4">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.12}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.1}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.2}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.3}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shani_result.11}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{ekadi_df.7}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{ekadi_df.0.Shani_result.4}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shani_result.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.5}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.9}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.6}}</td>
+												</tr>
+											</tbody>
+										</table>		
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.12}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.1}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.2}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.3}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shani_result.11}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{ekadi_df.7}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{ekadi_df.0.Shani_result.4}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shani_result.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.5}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.9}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.6}}</td>
+												</tr>
+											</tbody>
+										</table>		
+									</div>
+									<div class="col-md-4">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.12}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.1}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.2}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.3}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shani_result.11}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{ekadi_df.7}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{ekadi_df.0.Shani_result.4}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shani_result.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.5}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.9}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.6}}</td>
+												</tr>
+											</tbody>
+										</table>		
+									</div>
+									<div class="col-md-4">
+										<table class="table table-bordered"  >
+											<tbody>
+												<tr style="line-height:50px !important;">						
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.12}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.1}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.2}}</td>
+													<td style="width:30px !important">{{ekadi_df.0.Shani_result.3}}</td>
+												 </tr>
+												<tr style="line-height:50px !important;">						  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shani_result.11}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;color:green;font-weight:bold;">{{ekadi_df.7}}</td>							
+												  <td style="width:60px !important;height:60px !important" >{{ekadi_df.0.Shani_result.4}}</td>
+												</tr>						
+												<tr  style="line-height:50px !important;">					  
+												  <td style="width:60px !important;height:60px !important;">{{ekadi_df.0.Shani_result.10}}</td>
+												  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.5}}</td>
+												</tr>
+												  <tr  style="line-height:50px !important;">						
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.9}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.8}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.7}}</td>
+												  <td style="width:60px !important;height:60px !important">{{ekadi_df.0.Shani_result.6}}</td>
+												</tr>
+											</tbody>
+										</table>		
+									</div>
+								</div>
+								
+							</div>		
+						</div>
+						<div class="card mb-2">
+							<div class="card-header bg-info bg-gradient text-white">Shodhana Pinda</div>		
+							<div class="card-body">
+
+							</div>		
+						</div>
+						<div class="card mb-2">
+							<div class="card-header bg-info bg-gradient text-white">Kashta Arishta</div>		
+							<div class="card-body">
+
+							</div>		
+						</div>
+					</div>					
+				</div>
+			
+			</div>	
+			
+		</div>
+		<div class="col-md-2">
+			<div class="row sticky-top">
+				<div class="col-md-12">
+					<table class="table table-bordered"  >
+						<tbody>
+							<tr style="line-height:50px !important;">						
+								<td style="width:30px !important"></td>
+								<td style="width:30px !important"></td>
+								<td style="width:30px !important"></td>
+								<td style="width:30px !important"></td>
+							 </tr>
+							<tr style="line-height:50px !important;">						  
+							  <td style="width:60px !important;height:60px !important;"></td>
+							  <td colspan="2" style="width:60px !important;height:60px !important;">Rashi</td>							
+							  <td style="width:60px !important;height:60px !important" ></td>
+							</tr>						
+							<tr  style="line-height:50px !important;">					  
+							  <td style="width:60px !important;height:60px !important;"></td>
+							  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+							  <td style="width:60px !important;height:60px !important"></td>
+							</tr>
+							  <tr  style="line-height:50px !important;">						
+							  <td style="width:60px !important;height:60px !important"></td>
+							  <td style="width:60px !important;height:60px !important"></td>
+							  <td style="width:60px !important;height:60px !important"></td>
+							  <td style="width:60px !important;height:60px !important"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<table class="table table-bordered"  >
+						<tbody>
+							<tr style="line-height:50px !important;">						
+								<td style="width:30px !important"></td>
+								<td style="width:30px !important"></td>
+								<td style="width:30px !important"></td>
+								<td style="width:30px !important"></td>
+							 </tr>
+							<tr style="line-height:50px !important;">						  
+							  <td style="width:60px !important;height:60px !important;"></td>
+							  <td colspan="2" style="width:60px !important;height:60px !important;">Navamsha</td>							
+							  <td style="width:60px !important;height:60px !important" ></td>
+							</tr>						
+							<tr  style="line-height:50px !important;">					  
+							  <td style="width:60px !important;height:60px !important;"></td>
+							  <td colspan="2" style="width:60px !important;height:60px !important;"  ></td>						
+							  <td style="width:60px !important;height:60px !important"></td>
+							</tr>
+							  <tr  style="line-height:50px !important;">						
+							  <td style="width:60px !important;height:60px !important"></td>
+							  <td style="width:60px !important;height:60px !important"></td>
+							  <td style="width:60px !important;height:60px !important"></td>
+							  <td style="width:60px !important;height:60px !important"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				
+			</div>			
+		</div>
+	</div>
+</div>
+{% endblock %}	
+		
