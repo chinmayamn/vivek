@@ -1,0 +1,1036 @@
+{% extends "master.html" %}
+{% block content %}
+{% autoescape off %}
+<div id="body" >
+  <div class="row"  >
+          <div class="col-md-8" data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0"  tabindex="0">
+            <div id="scrollspyHeading1" >
+              <div class="card mb-2">
+                <div class="card-header">1. Problem definition and goal setting</div>
+                <div class="card-body">
+                
+                  {{problem_definition|linebreaks|escape}}
+                
+                </div> 						
+              </div>
+              <div class="card mb-2">
+                <div class="card-header">2. Data collection</div>
+                <div class="card-body">
+                {{data_collect|linebreaks}}</div> 						
+              </div>
+              <div class="card mb-2">
+                <div class="card-header">3. Data cleaning</div>
+                <div class="card-body">
+                      <div class="row">
+                          <div class="col-md-12">
+                              {{data_cleaning|linebreaks|safe}}                                                                                                        
+                          </div>
+                          <div class="col-md-12">
+                            {{duplicate_df|safe}} 
+                          </div>
+                      </div>
+                      <br/>Summary :<br/><br/>
+                      <div class="row">
+                          <div class="col-md-12" style="color:#858796 !important">
+                            
+                              <h6 class="font-weight-bold" >Original data <span style="float:right !important">100%</span></h6>
+                              <div class="progress">
+                                  <div class="progress-bar bg-success" style="width:100%"></div>
+                                </div><br/>
+                                <h6 class="font-weight-bold">Missing data <span style="float:right !important">{{missing.Percentage}}%</span></h6>
+                                <div class="progress">
+                                  <div class="progress-bar bg-info" style="width:{{missing.Percentage}}%"></div>
+                                </div><br/>
+                                <h6 class="font-weight-bold">Duplicate data <span style="float:right !important">{{duplicates.Percentage}}%</span></h6>
+                                <div class="progress">
+                                  <div class="progress-bar bg-warning" style="width:{{duplicates.Percentage}}%"></div>
+                                </div><br/>
+                                <h6 class="font-weight-bold">Outlier's data <span style="float:right !important">{{outlier_data.Percentage}}%</span></h6>
+                                <div class="progress">
+                                  <div class="progress-bar bg-warning" style="width:{{outlier_data.Percentage}}%"></div>
+                                </div><br/>
+                                <h6 class="font-weight-bold">Cleaned data <span style="float:right !important">{{cleaned.Percentage}}%</span></h6>
+                                <div class="progress">
+                                  <div class="progress-bar bg-danger" style="width:{{cleaned.Percentage}}%"></div>
+                                </div>
+                          </div>                      
+                      </div>  
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          {{data_cleaning_1|linebreaks}}  
+                        </div>
+                      </div>
+                    
+                      <div class="row">                     
+                          {% for i in hist_chart %}                       
+                          <div class="col-md-6" id="histchart">
+                            <img src="data:image/png;base64,{{i}}" />
+                          </div>                                        
+                          {% endfor %}   
+                                        
+                      </div>    
+                      <div class="row">
+                        <div class="col-md-12">
+                          {{data_cleaning_1_1|linebreaks}}  
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          {{df_data_norm1}}
+                        </div>
+                      </div>   
+                      <div class="row">
+                        <div class="col-md-12">
+                          {{data_cleaning_2|linebreaks}}
+                        </div>
+                      </div>   
+                      <div class="row">
+                        
+                          {{data_cleaning_3|linebreaks}}
+                        
+                      </div>   
+                </div> 						
+              </div>
+              <div class="card mb-2">
+                <div class="card-header">4. Data exploration & visualization (EDA)</div>
+                <div class="card-body">
+                  <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">Statistical analysis</li>
+                      <li class="breadcrumb-item active" aria-current="page">Descriptive statistics</li>
+                    </ol>
+                  </nav>
+                
+                  Measure of Central Tendency
+                  {{central_tendency}}
+                  <div class="row">
+                  {% for i in cth_graph %}       
+                     <div class="col-md-6" id="histchart1"> 
+                      <img src="data:image/png;base64,{{i}}" />
+                    </div>
+                  {% endfor %}        
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    Measure of Dispersion
+                    {{dispersion}}
+                  </div>
+                </div><br/>
+                <div class="row">
+                  <div class="col-md-12"><p><b>Skewness:</b> Measures the asymmetry of the the distribution. A skewness of zero indicates a perfectly symmetrical distribution, while positive skewness indicates a longer 
+                    right tail and negative skewness indicates a longer left tail</p>
+                    <p><b>Kurtosis:</b> Measures the 'tailedness' of the distribution. Higher kutosis indicates more data in the tails and sharper peak, while lower kurtossi indicates less data in the tails and a flatter peak.
+                    higher kurtosis can indicate higher outliers
+
+                    If a feature is highy skewed, transformations can be applied to make distribution normal.</p>
+                    {{skew_kurtosis_df}}
+                  </div>
+                </div>
+                  
+                
+                
+                </div> 						
+              </div>
+              <div class="card mb-2">
+                <div class="card-header"></div>
+                <div class="card-body"></div> 						
+              </div>
+              <div class="card mb-2">
+                <div class="card-header"></div>
+                <div class="card-body"></div> 						
+              </div>
+              <div class="card mb-2">
+                <div class="card-header"></div>
+                <div class="card-body"></div> 						
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4" data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0"  tabindex="0">
+            <h6 class="font-weight-bold">Tasks <span style="float:right !important">{{task_status_count.Completed}} / {{task_status_count.Total}}</span></h6>
+            <div class="progress">
+              <div class="progress-bar bg-primary" style="width:{{task_status_count.Percentage}}%"></div>
+            </div><br/>
+          
+              <table class="table table-bordered">
+                  <tbody>
+                    <tr >
+                      <td class="col-md-11">1. Problem definition and goal setting</td>
+                  
+                      <td class="col-md-1"></td>
+                    </tr>
+                    <tr >
+                      <td><span class="tab"></span>a. Define the problem to solve</td>
+                      {% if task_status.Problem == "Pending" %}
+                          <td><span class="badge rounded-pill bg-secondary">{{task_status.Problem}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.Problem}}</span></td>
+                      {% endif %}    
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span>b. Goals & objectives of ML model</td>
+                      {% if task_status.Goal == "Pending" %}
+                          <td><span class="badge rounded-pill bg-secondary">{{task_status.Goal}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.Goal}}</span></td>
+                      {% endif %}    
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span>c. Success criteria</td>
+                      {% if task_status.Criteria == "Pending" %}
+                          <td><span class="badge rounded-pill bg-secondary">{{task_status.Criteria}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.Criteria}}</span></td>
+                      {% endif %}    
+                    </tr>
+                    
+                    <tr>
+                      <td>2. Data collection</td>                         
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span>a. Scraping data from websites</td>
+                      {% if task_status.Scrapping == "Pending" %}
+                          <td><span class="badge rounded-pill bg-secondary">{{task_status.Scrapping}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.Scrapping}}</span></td>
+                      {% endif %}                         
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span>b. Import dataset</td>
+                      {% if task_status.Importing == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.Importing}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.Importing}}</span></td>
+                      {% endif %}
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span>c. Analyzing data</td>
+                      {% if task_status.Analyzing == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.Analyzing}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.Analyzing}}</span></td>
+                      {% endif %}
+                    </tr>
+
+                    <tr>
+                      <td>3. Data cleaning</td>
+                  
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span>a. Handling inconsitent data & standardization</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Removal of missing values</td>
+                      {% if task_status.Missing == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.Missing}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.Missing}}</span></td>
+                      {% endif %}    
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Removal of duplicates</td>
+                      {% if task_status.Duplicates == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.Duplicates}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.Duplicates}}</span></td>
+                      {% endif %}    
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Imputation</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Simple imputation methods</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Mean imputation</td>
+                        {% if task_status.MeanImputation == "Pending" %}
+                        <td><span class="badge rounded-pill bg-secondary">{{task_status.MeanImputation}}</span></td>
+                        {% else %}
+                            <td><span class="badge rounded-pill bg-success">{{task_status.MeanImputation}}</span></td>
+                        {% endif %}  
+                    </tr>       
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Median imputation</td>
+                        {% if task_status.MedianImputation == "Pending" %}
+                        <td><span class="badge rounded-pill bg-secondary">{{task_status.MedianImputation}}</span></td>
+                        {% else %}
+                            <td><span class="badge rounded-pill bg-success">{{task_status.MedianImputation}}</span></td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Mode imputation</td>
+                        {% if task_status.ModeImputation == "Pending" %}
+                        <td><span class="badge rounded-pill bg-secondary">{{task_status.ModeImputation}}</span></td>
+                        {% else %}
+                            <td><span class="badge rounded-pill bg-success">{{task_status.ModeImputation}}</span></td>
+                        {% endif %}                           
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Constant value imputation</td>                            
+                        {% if task_status.ConstantValueImputation == "Pending" %}
+                        <td><span class="badge rounded-pill bg-secondary">{{task_status.ConstantValueImputation}}</span></td>
+                        {% else %}
+                            <td><span class="badge rounded-pill bg-success">{{task_status.ConstantValueImputation}}</span></td>
+                        {% endif %}                         
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Advanced imputation methods</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>KNN imputation</td>                           
+                        {% if task_status.KNNImputation == "Pending" %}
+                        <td><span class="badge rounded-pill bg-secondary">{{task_status.KNNImputation}}</span></td>
+                        {% else %}
+                            <td><span class="badge rounded-pill bg-success">{{task_status.KNNImputation}}</span></td>
+                        {% endif %}                             
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Multivariate imputation by chained equations</td>                          
+                        {% if task_status.MultivariateImputation == "Pending" %}
+                        <td><span class="badge rounded-pill bg-secondary">{{task_status.MultivariateImputation}}</span></td>
+                        {% else %}
+                            <td><span class="badge rounded-pill bg-success">{{task_status.MultivariateImputation}}</span></td>
+                        {% endif %}                             
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Regression imputation</td>                            
+                        {% if task_status.RegressionImputation == "Pending" %}
+                        <td><span class="badge rounded-pill bg-secondary">{{task_status.RegressionImputation}}</span></td>
+                        {% else %}
+                            <td><span class="badge rounded-pill bg-success">{{task_status.RegressionImputation}}</span></td>
+                        {% endif %}                             
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Multiple imputation</td>                         
+                        {% if task_status.MultipleImputation == "Pending" %}
+                        <td><span class="badge rounded-pill bg-secondary">{{task_status.MultipleImputation}}</span></td>
+                        {% else %}
+                            <td><span class="badge rounded-pill bg-success">{{task_status.MultipleImputation}}</span></td>
+                        {% endif %}                            
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>ML models</td>
+                      <td></td>           
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Random forest imputation</td>
+
+                      {% if task_status.RandomForestImputation == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.RandomForestImputation}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.RandomForestImputation}}</span></td>
+                      {% endif %}   
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Deep learning methods</td>
+                      {% if task_status.DeepLearningImputation == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.DeepLearningImputation}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.DeepLearningImputation}}</span></td>
+                      {% endif %}  
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Flagging</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Anamoly detection</td>
+                      {% if task_status.AnomolyFlagging == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.AnomolyFlagging}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.AnomolyFlagging}}</span></td>
+                      {% endif %}  
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Data quality</td>
+                      {% if task_status.AnomolyFlagging == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.AnomolyFlagging}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.AnomolyFlagging}}</span></td>
+                      {% endif %}  
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Class imbalance</td>
+                      {% if task_status.ClassImbalanceFlagging == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.ClassImbalanceFlagging}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.ClassImbalanceFlagging}}</span></td>
+                      {% endif %}  
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Feature engineering</td>
+                      {% if task_status.FeatureEngineeringFlagging == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.FeatureEngineeringFlagging}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.FeatureEngineeringFlagging}}</span></td>
+                      {% endif %}  
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Model monitoring</td>
+                      {% if task_status.ModelMonitoringFlagging == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.ModelMonitoringFlagging}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.ModelMonitoringFlagging}}</span></td>
+                      {% endif %}  
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Bias identifying</td>
+                      {% if task_status.BiasIdenitfyingFlagging == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.BiasIdenitfyingFlagging}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.BiasIdenitfyingFlagging}}</span></td>
+                      {% endif %}  
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Encoding Categorical Variables</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>One-hot encoding</td>
+                      {% if task_status.OneHotEncoding == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.OneHotEncoding}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.OneHotEncoding}}</span></td>
+                      {% endif %}  
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Label encoding</td>
+                      {% if task_status.LabelEncoding == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.LabelEncoding}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.LabelEncoding}}</span></td>
+                      {% endif %}  
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Binary encoding</td>
+                      {% if task_status.BinaryEncoding == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.BinaryEncoding}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.BinaryEncoding}}</span></td>
+                      {% endif %}  
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span>b. Data normalization</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Visual methods</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Histogram</td>
+                      {% if task_status.HistNorm == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.HistNorm}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.HistNorm}}</span></td>
+                      {% endif %}  
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Q-Q plot</td>
+                      {% if task_status.QQNorm == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.QQNorm}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.QQNorm}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Statistical tests</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Shapiro-Wilk test</td>
+                      {% if task_status.ShapiroNorm == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.ShapiroNorm}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.ShapiroNorm}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Kolmogorov-Smirnov test</td>
+                      {% if task_status.KolmogorovNorm == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.KolmogorovNorm}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.KolmogorovNorm}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>D'agostino's K-squared test</td>
+                      {% if task_status.KSquaredNorm == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.KSquaredNorm}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.KSquaredNorm}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span>c. Dealing with noisy data</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Smoothing</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Outlier detection</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Normally distributed dataset</td>
+                      {% if task_status.NormalDistributed == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.NormalDistributed}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.NormalDistributed}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Skewed distributed dataset</td>
+                      {% if task_status.SkewDistributed == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.SkewDistributed}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.SkewDistributed}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td>4. Data exploration and visualization (EDA)</td>
+                  
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span>a. Statistical analysis</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Descriptive statistics</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Organize data into table or list</td>
+                      {% if task_status.TableData == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.TableData}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.TableData}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Measure of central tendency</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Mean</td>
+                      {% if task_status.MeanData == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.MeanData}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.MeanData}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Median</td>
+                      {% if task_status.MedianData == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.MedianData}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.MedianData}}</span></td>
+                      {% endif %} 
+                    </tr> 
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Mode</td>
+                      {% if task_status.ModeData == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.ModeData}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.ModeData}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Histogram for Central Tendency</td>
+                      {% if task_status.CTGraph == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.CTGraph}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.CTGraph}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Measure of dispersion</td>
+                    <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Range</td>
+                      {% if task_status.RangeData == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.RangeData}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.RangeData}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Variance</td>
+                      {% if task_status.VarianceData == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.VarianceData}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.VarianceData}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Standard deviation</td>
+                      {% if task_status.StandardDeviationData == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.StandardDeviationData}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.StandardDeviationData}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Data distribution</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Histograms</td>
+                      {% if task_status.HistogramData == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.HistogramData}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.HistogramData}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Skewness</td>
+                      {% if task_status.Skewness == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.Skewness}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.Skewness}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Kurtosis</td>
+                      {% if task_status.Kurtosis == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.Kurtosis}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.Kurtosis}}</span></td>
+                      {% endif %} 
+                    </tr>
+                
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Interpretation</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Univariate analysis</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Data visualization</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Bar chart</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Pie chart</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Histogram</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Dot plots</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Central tendancy</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Mean</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Arithmetic Mean</td>
+                      {% if task_status.ArithmeticUnivariate == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.ArithmeticUnivariate}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.ArithmeticUnivariate}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Weighted Mean</td>
+                      {% if task_status.WeightedUnivariate == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.WeightedUnivariate}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.WeightedUnivariate}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Geometric Mean</td>
+                      {% if task_status.GeometricUnivariate == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.GeometricUnivariate}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.GeometricUnivariate}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Median</td>
+                      {% if task_status.MedianUnivariate == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.MedianUnivariate}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.MedianUnivariate}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Mode</td>
+                      {% if task_status.ModeUnivariate == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.ModeUnivariate}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.ModeUnivariate}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Dispersion</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Range</td>
+                      {% if task_status.RangeUnivariate == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.RangeUnivariate}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.RangeUnivariate}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Standard deviation</td>
+                      {% if task_status.SDUnivariate == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.SDUnivariate}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.SDUnivariate}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Quartiles</td>
+                      {% if task_status.QuartilesUnivariate == "Pending" %}
+                      <td><span class="badge rounded-pill bg-secondary">{{task_status.QuartilesUnivariate}}</span></td>
+                      {% else %}
+                          <td><span class="badge rounded-pill bg-success">{{task_status.QuartilesUnivariate}}</span></td>
+                      {% endif %} 
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Shape</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Skewness</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Kurtosis</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Bivariate analysis</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Data visualization</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Scatter plot</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Line chart</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Correlation</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Peasons's coefficient</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Spearman's rank correlation coefficient</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Multivariate analysis</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Regression analysis</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Principal Component Analysis</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Path analysis</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Linear systems</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Gaussian elimination</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Matrix decomposition</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>LU decomposition</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Missing value analysis</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Feature engineering</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Data preprocessing</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Class imbalance analysis</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Interactive exploration</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span>b. Visualization</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Bar chart</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Line chart</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Scatter plot</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Pie charts</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Histogram</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>heatmaps</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span>c. Correlation analysis</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span>d. Hypothesis testing</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>5. Feature engineering</td>                       
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span>Creating new features</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span>Transforming features</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span>Encooding categorical variables</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>6. Feature selection</td>                       
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span>Univariate selection</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span>Recursive feature elimination</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span>Principal Component Analysis (PCA)</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>7. Data splitting</td>
+                  
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>8. Model selection</td>
+                  
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>9. Model training</td>
+                  
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>10. Model evaluation</td>
+                  
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>11. Model tuning</td>
+                  
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>12. Deployment</td>
+                  
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>13. Documentation & reporting</td>
+                  
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span>Data drift</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Statistical test</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Kolmogorov-Smirnov test</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Chi-square dataset</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Population Stability Index(PSI)</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span>Model drift</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Establish baseline performance</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Accuracy</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Precision</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Recall</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>F1 Score</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>ROC-AUC</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Mean Absolute Error (MAE)</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Mean Squared Error (MSE)</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span>Current performance</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Accuracy</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Precision</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><span class="tab"></span><span class="tab"></span><span class="tab"></span>Recall</td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+          </div>
+  </div>
+</div>
+<!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title"><span>Cleaned dataset. Rows : </span> <span class="highlighter">{{df.len}}</span></h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        {{df.data}}
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="modal" id="outlierModal">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title"><span>Outlier dataset. Rows : </span> <span class="highlighter">{{df_outlier.len}}</span></h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        {{df_outlier.data}}
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endautoescape %}
+{% endblock %}	
