@@ -1,0 +1,179 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style type="text/css">
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+		}
+
+		* {
+			font-family: "Roboto", sans-serif !important;
+			font-size:13px;
+		}
+
+		#container {
+					position: relative;
+		}
+
+		#body {
+			width:100%;padding-top:5px;padding-bottom:5px;
+		}
+
+		#footer {
+			position: relative;
+			bottom: 0;
+			width: 100%;
+			height: 60px; /* Height of the footer */
+		}
+
+		.header, .footer {
+		
+			color:#00b300;
+		
+		}
+
+		.header {
+			min-height: 30px !important;
+			display: block !important;
+		}
+
+		.footer {
+			min-height: 40px;
+			bottom: 0;
+		}
+
+			.footer p {
+				padding: 0px;
+				margin: 0px;
+				line-height: 50px;
+			}
+
+		h3 {
+			line-height: 1.8 !important;
+		}
+        .navbar
+        {
+            padding:0px !important;
+        }
+        h3{
+            margin:0px !important;
+        }
+		.dataframe{
+			width:100% !important;
+		}
+		.dataframe thead,th,tr,td{
+            border:1px solid !important;text-align:left !important;padding:8px;
+            border-color:rgb(222, 226, 230) !important;
+        }
+		.dataframe th{
+			background-color: #FF7518 !important;color:white !important;
+		}
+		.lastrow tr:last-child{
+			background-color: #57C84D !important;color:black !important;font-weight:bold;
+		}
+		.inauspicious, .blink {
+            animation: blinker 1.5s linear infinite;
+            color: red;
+            font-family: sans-serif;
+			border-color:black !important;
+        }
+		.auspicious, .blink {
+            animation: blinker 1.5s linear infinite;
+            color: green;
+            font-family: sans-serif;
+			border-color:black !important;
+        }
+        @keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
+		#ded {
+		columns: 2;
+		-webkit-columns: 2;
+		-moz-columns: 2;
+		}
+		.nakshatra_pada >tbody > tr:nth-child(1n+1){
+				background-color:lightyellow
+		}
+		.nakshatra_pada >tbody > tr:nth-child(1n+10){
+				background-color:lightsalmon
+		}
+		.nakshatra_pada >tbody > tr:nth-child(1n+19){
+				background-color:pink
+		}
+		.nakshatra_pada >tbody > tr:nth-child(1n+28){
+				background-color:lightblue
+		}
+		.nakshatra_pada >tbody > tr:nth-child(1n+37){
+				background-color:gainsboro
+		}
+		.nakshatra_pada >tbody > tr:nth-child(1n+46){
+				background-color:burlywood
+		}
+		.nakshatra_pada >tbody > tr:nth-child(1n+55){
+				background-color:lightgoldenrodyellow
+		}
+		.nakshatra_pada >tbody > tr:nth-child(1n+64){
+				background-color:papayawhip
+		}
+		.nakshatra_pada >tbody > tr:nth-child(1n+64){
+				background-color:tomato
+		}
+		.nakshatra_pada >tbody > tr:nth-child(1n+73){
+				background-color:cornsilk
+		}
+		.nakshatra_pada >tbody > tr:nth-child(1n+82){
+				background-color:whitesmoke
+		}
+		.nakshatra_pada >tbody > tr:nth-child(1n+91){
+				background-color:aquamarine
+		}
+		.nakshatra_pada >tbody > tr:nth-child(1n+100){
+				background-color:peachpuff
+		}
+		.r_c_highlight tr:last-child,.r_c_highlight td:last-child {
+			font-weight: bold;
+		}
+		.r_c_highlight tr:last-child> td:last-child {
+			font-weight: bold;color:royalblue
+		}
+        .tab {
+ 
+				margin-left: 4em !important;
+			}
+
+		#histchart img, #histchart1 img{
+			width:99% !important;height:99%;
+		}
+		.highlighter
+		{
+			color:#cc0099 !important
+		}
+		
+	</style>
+	<link href="{% static 'bootstrap.min.css'%}" rel="stylesheet" type="text/css" >
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" ></script>
+
+</head>
+<body data-bs-spy="scroll" data-bs-target=".nav" data-bs-offset="50" >	
+	<div class="container-fluid">
+		<div class="header text-uppercase font-weight-bold bg-gradient " style="text-align:center">
+			<h3 style="top:50%;left:50%;" class=""></h3>
+		</div>
+	
+		<div id="body">
+            {% block content %}
+            {% endblock %}
+		</div>
+		
+	</div>
+		 
+</body>
+</html>
