@@ -1,0 +1,256 @@
+{% extends "master.html" %}
+
+{% block content %}
+
+  <!-- Nav pills -->
+  <ul class="nav nav-pills nav-justified" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" data-bs-toggle="pill" href="#home">Panchanga</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="pill" href="#menu1">Nakshatra chart</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="pill" href="#menu2">Rashi chart</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="pill" href="#menu3">Graha chart</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="pill" href="#menu4">Traits</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="pill" href="#menu5">Nakshatra pada</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link " data-bs-toggle="pill" href="#menu6">Tithigalu</a>
+    </li>
+    <li class="nav-item">
+       <a class="nav-link" data-bs-toggle="pill" href="#menu7">Karanagalu</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="pill" href="#menu8">Yogagalu</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="pill" href="#menu9">Maasa</a>
+     </li>
+    <li class="nav-item">
+         <a class="nav-link" data-bs-toggle="pill" href="#menu10">Charts</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="pill" href="#menu11">Kootagalu</a>
+   </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div id="home" class="tab-pane active">
+        <div class="row">   
+            <div class="col-md-12">     
+                <table class="dataframe">    
+                <tr> 
+                    {% for  row in panchanga_df7_html.columns %}
+                    <th> 
+                        {{row.values}}
+                    </th>
+                    {% endfor %}
+                </tr> 
+                {% for index, row in panchanga_df7_html.iterrows %}
+                <tr >
+                    <td>{{row.0}}</td>
+                    <td>
+                        <ul class="list-group list-group-flush" id="ded">
+                            {% for sdef in row.1 %}
+                            <li class="list-group-item">
+                                {{sdef}}
+                            </li>                   
+                        {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class="list-group" style="display:flow;columns:3">
+                            {% for sdef in row.2 %}
+                            <li class="list-group-item">
+                                {{sdef}}
+                            </li>                   
+                        {% endfor %}
+                        </ul>
+
+                    </td>
+                    <td>
+                        <ul class="list-group  table-bordered" style="display:flow;columns:6">
+                        {% for sde in row.3 %}
+                        <li class="list-group-item"> {{sde}}</li>                     
+                        {% endfor %}     
+                         </ul>               
+                    </td>
+                    <td>
+                        <ul class="list-group list-group-flush">
+                            {% for sdef in row.4 %}
+                            <li class="list-group-item">
+                                {{sdef}}
+                            </li>                   
+                        {% endfor %}
+                        </ul>
+                       </td>
+                 </tr>
+            {% endfor %}
+            </table>
+                <!-- {{panchanga_df7_html}} -->
+            </div>
+        </div>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+        <div class="row">   
+            <div class="col-md-12">       
+                {{nakshatra_df3_html|safe}}
+            </div>
+        </div>
+    </div>
+    <div id="menu2" class="tab-pane fade">
+        <div class="row">
+            <div class="col-md-12">
+                {{rashi_df4_html|safe}}
+            </div>
+        </div>
+    </div>
+    <div id="menu3" class="tab-pane fade">
+        <div class="row">
+            <div class="col-md-6">
+                {{graha_df5_html|safe}}
+            </div>
+            <div class="col-md-6">
+                
+            </div>
+        </div>
+    </div>
+    <div id="menu4" class="tab-pane fade">
+        <div class="row">
+            <div class="col-md-12 opacity-100" data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0"  tabindex="0">
+                <ul class=" nav nav-pills sticky-top navbar-light nav-justified " id="navbar-example2" > 
+                    {% for key,value in traits_df8_html.items %}                     
+                      <li class=" nav-item">
+                        <a class="nav-link "  href=#{{key|cut:' '}}>{{key}}</a>
+                      </li>                   
+                    {% endfor %}
+                </ul>
+                <table class="dataframe" >
+                    <tr>
+                        <!-- <th>Sl.no</th> -->
+                        <th>Traits</th>
+                        <th>Description</th>
+                    </tr>
+                    {% for key,value in traits_df8_html.items %}
+                      {% for f,g in value.items %}
+                    <tr id="{{key|cut:' '}}"> 
+                        <!-- <td class="col-md-1"> {{ forloop.counter }}</td> -->
+                        <td style="text-align:left !important" class="col-md-1">{{f}}</td>
+                        <td style="text-align:left !important" class="col-md-10">{{g|safe}}</td>                                     
+                    </tr>  
+                        {% endfor %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="menu5" class="tab-pane fade">
+        <div class="row">
+            <div class="col-md-6">
+                {{pada_df6_html|safe}}
+            </div>
+        </div>    
+    </div>
+    <div id="menu6" class="tab-pane fade">
+        <div class="row">
+            <div class="col-md-12">
+                {{tithi_df10_html|safe}}
+            </div>
+        </div>   
+        <div class="row">
+            <div class="col-md-12">
+                {{inauspicious_df_html|safe}}
+            </div>
+        </div>   
+        <div class="row">
+            <div class="col-md-12">
+                {{auspicious_df_html|safe}}
+            </div>
+        </div>   
+    </div>
+    <div id="menu7" class="tab-pane fade">
+        <div class="row">
+            <div class="col-md-6">
+                {{karana_df9_html|safe}}
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>    
+    </div>
+    <div id="menu8" class="tab-pane fade">
+        <div class="row">
+            <div class="col-md-12">
+            <table class="dataframe">      
+                {% for index, row in yoga_df10_html.iterrows %}
+                <tr >
+                    <td>{{row.0}}</td>
+                    <td>{{row.1}}</td>
+                    <td class="{{row.2}}">{{row.2}}</td>
+                 </tr>
+            {% endfor %}
+                <!-- {{yoga_df10_html|safe}} -->
+                
+            </table>
+            </div>
+        </div>    
+        
+    </div>
+    <div id="menu9" class="tab-pane fade">
+        <div class="row">   
+            <div class="col-md-6">       
+                <table class="dataframe">
+                    <tr> 
+                        <th>Sl.no</th>
+                        <th>Maasa</th>
+                    </tr>    
+                    {% for key,value in df1_html.items %}         
+                    <tr> 
+                        <td>{{key}}</td>
+                        <td>{{value}}</td>
+                    </tr>    
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col-md-6"></div>
+        </div>
+    </div>
+    <div id="menu10" class="tab-pane fade">
+        <div class="row">
+            <div class="col-md-6">
+                {{chart_df11_html|safe}}
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>    
+    </div>
+    <div id="menu11" class="tab-pane fade">
+        <div class="row">
+            <div class="col-md-3">
+                <h5>Ganakoota</h5>
+                {{koota_df12_html|safe}}
+                {{gkt_df13_html|safe}}
+            </div>
+            <div class="col-md-3">                
+                <h5>Naadikoota</h5>              
+                {{ndik_df15_html|safe}}
+                {{ndi_df14_html|safe}}
+            </div>
+            <div class="col-md-3">
+               
+            </div>
+            <div class="col-md-3">
+               
+            </div>
+        </div>    
+    </div>
+  </div>
+{% endblock %}	
