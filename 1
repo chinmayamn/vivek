@@ -1,0 +1,436 @@
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.template import loader
+import pandas as pd
+import datetime
+import matplotlib
+matplotlib.use('Agg')
+from matplotlib import pyplot as plt
+import io
+from scipy import stats
+import base64
+import numpy as np
+import statistics
+
+def check_resolve_outlier(numerical_columns,df,df_outlier,total_outlier_data_per,fourth_content_3,outlier_data):
+    threshold=3
+    outlier_data_per=0.0
+    outlier_data={"Rows":"","Percentage":total_outlier_data_per,"rem_outlier_per":0.0}
+    df_outlier1 = pd.DataFrame()
+    fourth_content_3=fourth_content_3+"<div class='col-md-3
+mb-5'><table class='border border-1 border-dark'>"
+    for x in numerical_columns:
+        if len(df[x])<2000:
+            xy=stats.zscore(df[x])
+            df_outlier[xy.name]=xy
+            xt=xy[np.abs(xy)>threshold]
+            if len(xt>0):
+
+fourth_content_3=fourth_content_3+"<tr><td>"+xy.name+"</td><td>"+str(len(xt))+"</tr>"
+                df_outlier1 = pd.concat([df_outlier1,xt],axis=1)
+            else:
+                fourth_content_3=fourth_content_3+"<tr><td
+>"+xy.name+"</td><td class='bg-success text-white'> No
+outliers</td></tr>"
+
+    outlier_data_per=round((len(df_outlier1)/len(df))*100,2)
+
+    if outlier_data_per != 0.0:
+        fourth_content_3=fourth_content_3+"<tr
+class='bg-light'><td>Total outlier
+rows</td><td>"+str(len(df_outlier1)) +"</td></tr><tr
+class='bg-light'><td>Outlier data percentage</td><td
+class='text-danger fw-bold'>"+str(outlier_data_per)+"%</td></tr>"
+        for ind,row in df_outlier1.iterrows():
+            df.drop(index=ind, inplace=True)
+
+        fourth_content_3=fourth_content_3+"<tr><td colspan=2>Dropping
+outlier rows....</td></tr><tr class='bg-light'><td>Current Rows
+</td><td class='text-primary
+fw-bold'>"+str(df.shape[0])+"</td></tr><tr
+class='bg-light'><td>Current Columns
+</td><td>"+str(df.shape[1])+"</td></tr>"
+        total_outlier_data_per=total_outlier_data_per+round(outlier_data_per,0)
+        outlier_data={"Rows":"","Percentage":total_outlier_data_per,"rem_outlier_per":outlier_data_per}
+
+    fourth_content_3=fourth_content_3+"</table></div>"
+    return fourth_content_3,outlier_data,df,df_outlier,total_outlier_data_per
+
+def predict(request):
+    task_status={"Problem":"Pending","Goal":"Pending","Criteria":"Pending","Scrapping":"Pending","Importing":"Pending","Analyzing":"Pending","Missing":"Pending","Duplicates":"Pending",
+    "MeanImputation":"Pending","MedianImputation":"Pending","ModeImputation":"Pending","ConstantValueImputation":"Pending","KNNImputation":"Pending","MultivariateImputation":"Pending",
+    "RegressionImputation":"Pending","MultipleImputation":"Pending","RandomForestImputation":"Pending","DeepLearningImputation":"Pending","AnomolyFlagging":"Pending","DataQualityFlagging":"Pending",
+    "ClassImbalanceFlagging":"Pending","FeatureEngineeringFlagging":"Pending","ModelMonitoringFlagging":"Pending","BiasIdenitfyingFlagging":"Pending","OneHotEncoding":"Pending",
+    "LabelEncoding":"Pending","BinaryEncoding":"Pending","HistNorm":"Pending","QQNorm":"Pending","ShapiroNorm":"Pending","KolmogorovNorm":"Pending","KSquaredNorm":"Pending","NormalDistributed":"Pending",
+    "SkewDistributed":"Pending","TableData":"Pending","MeanData":"Pending","MedianData":"Pending","ModeData":"Pending","RangeData":"Pending","VarianceData":"Pending","StandardDeviationData":"Pending",
+    "HistogramData":"Pending","ArithmeticUnivariate":"Pending","WeightedUnivariate":"Pending","GeometricUnivariate":"Pending","MedianUnivariate":"Pending","ModeUnivariate":"Pending","RangeUnivariate":"Pending",
+    "SDUnivariate":"Pending","QuartilesUnivariate":"Pending","CTGraph":"Pending","Skewness":"Pending","Kurtosis":"Pending"}
+
+    first_content=""
+    second_content=""
+    outlier_data={}
+    threshold=3
+    fourth_content_3=""
+    outlier_data_per=0.0
+    total_outlier_data_per=0.0
+
+    df = pd.read_csv('diabetes_old.csv')
+    target=df["Outcome"]
+
+    if df.empty:
+      second_content=second_content+"\n No data"
+    else:
+      task_status["Scrapping"]="Completed"
+      task_status["Importing"]="Completed"
+    original_df=df.copy()
+    original={"Rows":original_df.shape[0],"Percentage":100}
+
+    first_content=first_content+"Analyze & solve classification and
+regression problems\n"
+
+    if target.dtype=="object":
+        first_content=first_content+"\nApplying classification method\n"
+    elif len(target.unique())<=2:
+        first_content=first_content+"\nApplying <span
+class='highlighter fw-bold'> binary classification method</span>\n"
+    else:
+        first_content=first_content+"\nApplying regression method\n"
+
+    first_content=first_content+"\nTest data should match with performance"
+    task_status["Problem"]="Completed"
+    task_status["Goal"]="Completed"
+    task_status["Criteria"]="Completed"
+
+    second_content="Scraping data from websites.....<button
+type='button' class='btn btn-secondary float-end '
+data-bs-toggle='modal' data-bs-target='#myModal'>Cleaned
+Dataset</button><button type='button' class='btn btn-warning float-end
+me-1' style='' data-bs-toggle='modal'
+data-bs-target='#outlierModal'>Outlier Dataset</button>\n\n Importing
+dataset.....\n\n"+"Rows : "+str(df.shape[0])+"\nColumns :
+"+str(df.shape[1])+"\n\tColumn names :
+"+str(df.columns.tolist())+"\n\n Analyzing data....\n\n"
+    num_columns=df.shape[1]
+
+    if num_columns==1:
+        second_content=second_content+"Dataset is <span
+class='highlighter fw-bold'>univariate</span>"
+    elif num_columns==2:
+        second_content=second_content+"Dataset is <span
+class='highlighter fw-bold'>birvariate</span>"
+    else:
+        second_content=second_content+"Dataset is <span
+class='highlighter fw-bold'>multivariate</span>"
+
+    data_types=df.dtypes
+    categorical_columns=data_types[data_types=='object'].index.tolist()
+    numerical_columns=data_types[data_types!='object'].index.tolist()
+
+    if len(categorical_columns) >0 and len(numerical_columns)>0:
+        second_content=second_content+"\nDataset is <span
+class='highlighter fw-bold'>heterogeneous</span>\n"
+    else:
+        second_content=second_content+"\nDataset is <span
+class='highlighter fw-bold'>homogeneous</span>\n"
+
+    if len(categorical_columns)>0:
+      second_content=second_content+"\n\tCategorical columns:
+"+str(categorical_columns)
+      for x in categorical_columns:
+          duplicates_id=df[x].duplicated(keep=False).tolist()
+          if True in duplicates_id:
+              second_content=second_content+"\n\t\t"+x+" is ordinal"
+    else:
+        second_content=second_content+"\nNo categorical variables"
+
+    if len(numerical_columns)>0:
+      second_content=second_content+"\n\n\tNumerical columns:
+"+str(numerical_columns)
+    else:
+      second_content=second_content+"\n\nNo numerical variables"
+
+    task_status["Analyzing"]="Completed"
+    third_content="Handling inconsitent data &
+standardization\nRemoving missing values....\n"
+    new_df=df.dropna()
+    missing_data_per=round(((len(df)-len(new_df))/len(df))*100,2)
+
+    if missing_data_per != 0.0:
+        third_content=third_content+"Missing data :
+"+str(missing_data_per)+"%\n"
+        df=new_df
+        third_content=third_content+"After cleaning Rows :
+"+str(df.shape[0])+"   Columns : "+str(df.shape[1])+"\n"
+    else:
+        third_content=third_content+"\n<span class='highlighter
+fw-bold'>No missing data</span>"
+
+    missing={"Rows":"","Percentage":round(missing_data_per,0)}
+    task_status["Missing"]="Completed"
+
+    percentage_duplicates=0.0
+    duplicate_df=pd.DataFrame()
+    third_content=third_content+"\n\nChecking for duplicates"
+    if df.duplicated(keep=False).any():
+        third_content=third_content+"\n\n<span class='text-danger
+fw-bold'>Detected duplicates</span>...\n"
+        duplicate_df=df[df.duplicated(df.columns.tolist(), keep=False)]
+        num_duplicates=len(df[df.duplicated(df.columns.tolist(), keep=False)])
+        total_rows=len(df)
+        percentage_duplicates=(num_duplicates/total_rows)*100
+        third_content=third_content+"\nPercentage of duplicates : "+
+str(round(percentage_duplicates,0))+"%"
+        third_content=third_content+"\nDropping Duplicates....\n"
+        df=df.drop_duplicates()
+        third_content=third_content+"\nRows :
+"+str(df.shape[0])+"\nColumns : "+str(df.shape[1])+"\n"
+    else:
+        third_content=third_content+"\n<span class='highlighter
+fw-bold'>No duplicates</span>"
+
+    duplicates={"Rows":"","Percentage":round(percentage_duplicates,0)}
+    task_status["Duplicates"]="Completed"
+    fourth_content="\n\nImputating...."
+    fourth_content=fourth_content+"\nFlagging...."
+    fourth_content=fourth_content+"\nEncoding Categorical Variables..."
+
+
+    fourth_content=fourth_content+"\n\nData normalization\n"
+    fourth_content=fourth_content+"\nVisualizing data for normalization.."
+
+    hist_image_base64=[]
+    for x in numerical_columns:
+        plt.hist(df[x])
+        plt.title('Histogram for '+str(x))
+        plt.xlabel('Value')
+        plt.ylabel('Frequency')
+        buf=io.BytesIO()
+        plt.savefig(buf,format='png')
+        buf.seek(0)
+        plt.close()
+        hist_image_base64.append(base64.b64encode(buf.read()).decode('utf-8'))
+
+        fig=plt.figure()
+        ax=fig.add_subplot(111)
+        stats.probplot(df[x],plot=plt)
+        plt.title('Q-Q plot for '+str(x))
+        plt.xlabel('Value')
+        plt.ylabel('Frequency')
+        buf=io.BytesIO()
+        plt.savefig(buf,format='png')
+        buf.seek(0)
+        plt.close(fig)
+        hist_image_base64.append(base64.b64encode(buf.read()).decode('utf-8'))
+
+    fourth_content_1="Analyzing data is normally distributed or skewed....\n"
+
+    if df.shape[0] <2000:
+        fourth_content_1=fourth_content_1+"\nDataset is having less
+than 2k records, <span class='text-info fw-bold'>Shapiro test</span>
+selected\n"
+    else:
+        fourth_content_1=fourth_content_1+"\nDataset is having more
+than 2k records, <span class='text-info fw-bold'>K2 and K squared
+test</span> selected\n"
+
+    df_data_norm1=pd.DataFrame(columns=['Test','Varaiable','Distribution','P
+Value'])
+    for x in numerical_columns:
+        if len(df[x])<2000:
+            #shapiro test
+            task_status["ShapiroNorm"]="Completed"
+            temp=[]
+            shapiro_test=stats.shapiro(df[x])
+            if shapiro_test.pvalue<0.05:
+                df_data_norm1.loc[len(df_data_norm1.index)] =
+['Shapiro',x,'Skewed',round(shapiro_test.pvalue,4)]
+            else:
+                df_data_norm1.loc[len(df_data_norm1.index)] =
+['Shapiro',x,'Normal',round(shapiro_test.pvalue,4)]
+        else:
+            #D'Agostino's k squared test
+            k2_test=stats.normaltest(df[x])
+            if k2_test.pvalue<0.05:
+                df_data_norm1.loc[len(df_data_norm1.index)] = ['D
+Agostino k squared ',x,'Skewed',round(k2_test.pvalue,4)]
+            else:
+                df_data_norm1.loc[len(df_data_norm1.index)] = ['D
+Agostino k squared ',x,'Normal',round(k2_test.pvalue,4)]
+
+            #ks test
+            ks_test=stats.kstest(df[x],'norm')
+            if ks_test.pvalue<0.05:
+              df_data_norm1.loc[len(df_data_norm1.index)] =
+['KS',x,'Skewed',round(ks_tes.pvalue,4)]
+            else:
+              df_data_norm1.loc[len(df_data_norm1.index)] =
+['KS',x,'Normal',round(ks_tes.pvalue,4)]
+
+    task_status["HistNorm"]="Completed"
+    task_status["QQNorm"]="Completed"
+    fourth_content_2=""
+    fourth_content_2=fourth_content_2+"\n\nDealing with noisy data"
+    fourth_content_2=fourth_content_2+"\nSmoothing \t\t\t - Pending"
+    fourth_content_2=fourth_content_2+"\n\nScanning for  outliers....\n"
+
+
+    df_outlier=pd.DataFrame()
+    df_outlier1=pd.DataFrame()
+
+    if len(df[x])<2000:
+        fourth_content_2=fourth_content_2+"\nAs dataset is less than
+2000 rows and normal distribution. Applying Z-Score for numerical
+columns...."
+    else:
+        fourth_content_2=fourth_content_2+"\nAs dataset is less than
+2000 rows and normal distribution. Applying IQR for numerical
+columns....\n"
+
+
+    fourth_content_3,outlier_data,df,df_outlier,total_outlier_data_per
+ = check_resolve_outlier(numerical_columns,df,df_outlier,total_outlier_data_per,fourth_content_3,outlier_data)
+
+
+    while outlier_data["rem_outlier_per"] !=0.0:
+        fourth_content_3,outlier_data,df,df_outlier,total_outlier_data_per
+ = check_resolve_outlier(numerical_columns,df,df_outlier,total_outlier_data_per,fourth_content_3,outlier_data)
+        if ["rem_outlier_per"] == 0.0:
+            break
+
+    list_describe=df.describe().columns.tolist()
+    desc_df=df.describe()
+    variance_list=[]
+    median_list=[]
+    sum_list=[]
+    mode_list=[]
+    for x in list_describe:
+        variance_list.append(df[x].var())
+        median_list.append(statistics.median(df[x]))
+        sum_list.append(df[x].sum())
+        mode_list.append(statistics.mode(df[x]))
+
+    desc_df.loc["variance"]=variance_list
+    desc_df.loc["median"]=median_list
+    desc_df.loc["sum"]=sum_list
+    desc_df.loc["mode"]=mode_list
+
+    # Create the histogram
+    c_t_h=[]
+    for x in desc_df:
+        plt.figure(figsize=(10, 6))
+        plt.hist(df.loc[:,x], bins=30, edgecolor='k', alpha=0.7)
+
+        mean=desc_df.loc["mean"][x]
+        median=desc_df.loc["median"][x]
+        mode=desc_df.loc["mode"][x]
+
+        # Plot mean, median, and mode
+        plt.axvline(mean, color='red', linestyle='dashed',
+linewidth=1, label=f'Mean: {mean:.2f}')
+        plt.axvline(median, color='blue', linestyle='dashed',
+linewidth=1, label=f'Median: {median:.2f}')
+        plt.axvline(mode, color='green', linestyle='dashed',
+linewidth=1, label=f'Mode: {mode:.2f}')
+
+        # Add labels and legend
+        plt.xlabel('Value')
+        plt.ylabel('Frequency')
+        plt.title('Mean, Median, and Mode histogram for '+x)
+        plt.legend()
+        buf=io.BytesIO()
+        plt.savefig(buf,format='png')
+        buf.seek(0)
+        plt.close()
+        c_t_h.append(base64.b64encode(buf.read()).decode('utf-8'))
+
+    task_status["CTGraph"]="Completed"
+
+    task_status["MeanData"]="Completed"
+    task_status["MedianData"]="Completed"
+    task_status["ModeData"]="Completed"
+    task_status["RangeData"]="Completed"
+    task_status["VarianceData"]="Completed"
+    task_status["StandardDeviationData"]="Completed"
+
+    skew_kurtosis_df=pd.DataFrame(columns=['Skewness','Skew
+intpt.','Pearsons Kurtosis','Kurtosis intpt.','Excess
+Kurtosis','Excess Kurt. intpt.'])
+    for x in numerical_columns:
+        s=stats.skew(df[x])
+        k=stats.kurtosis(df[x],fisher=False)
+        ek=stats.kurtosis(df[x])
+        s_i=""
+        k_i=""
+        ek_i=""
+        if s>=-.5 and s<=0.5:
+            s_i="Symmetrical/ Zero skew"
+        elif (s>=-1 and s<=-0.5) or(s>=0.5 and s<=1):
+            s_i="Positive/ Right skew"
+        elif(s<-1 and s>1):
+            s_i="Negative/Left skew"
+        else:
+            pass
+
+        if k==3:
+            k_i="Normal distribution - Mesokurtic"
+        elif k>3:
+            k_i="Leptokurtic"
+        elif k<3:
+            k_i="Platykurtic"
+        else:
+            pass
+
+        if ek==0:
+            ek_i="Normal distribution - Mesokurtic"
+        elif ek>0:
+            ek_i="Leptokurtic"
+        elif ek<0:
+            ek_i="Platykurtic"
+        else:
+            pass
+
+        skew_kurtosis_df.loc[x]=[s,s_i,k,k_i,ek,ek_i ]
+
+
+    #task_status["Skewness"]="Completed"
+    #task_status["Kurtosis"]="Completed"
+    #...........end content .......................
+
+    task_status["NormalDistributed"]="Completed"
+   # task_status["SkewDistributed"]="Completed"
+    task_status["TableData"]="Completed"
+    cleaned={"Rows":df.shape[0],"Percentage":round((df.shape[0]/original_df.shape[0])*100,0)}
+    task_completed=0
+    for x in task_status.values():
+        if x=="Completed":
+            task_completed+=1
+
+    context={
+        'problem_definition':first_content,
+        'data_collect':second_content,
+        'data_cleaning':third_content,
+        'data_cleaning_1':fourth_content,
+        'data_cleaning_1_1':fourth_content_1,
+        'data_cleaning_2':fourth_content_2,
+        'data_cleaning_3':fourth_content_3,
+        'df':{"data":df.to_html(),"len":len(df)},
+        'original':original,
+        'missing':missing,
+        'duplicates':duplicates,
+        'cleaned':cleaned,
+        'outlier_data':outlier_data,
+       # 'chart':image_base64,
+        'duplicate_df':"" if duplicate_df.empty else
+duplicate_df.to_html(index=False),
+        'hist_chart':hist_image_base64,
+        'task_status':task_status,
+        'task_status_count':{"Completed":task_completed,"Total":len(task_status),"Percentage":(task_completed/len(task_status)*100)},
+        'df_data_norm1':df_data_norm1.to_html(index=False),
+        'df_outlier':{"data":df_outlier.to_html(),"len":len(df_outlier)},
+        'central_tendency':desc_df.loc[["mean","median","mode"],:].to_html(),
+        'cth_graph':c_t_h,
+        'dispersion':desc_df.loc[["max","min","std","variance"],:].to_html(),
+        'skew_kurtosis_df':skew_kurtosis_df.to_html()
+      }
+
+    return render(request,'predict.html',context)
