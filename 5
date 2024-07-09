@@ -1,0 +1,411 @@
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.template import loader
+import pandas as pd
+import datetime
+from jataka.astrology import GanapathiHoraData
+
+# Create your views here.
+def basics(request):
+    gh=GanapathiHoraData()
+
+    #load data into a DataFrame object:
+    yoga_traits=[]
+    for x in gh.yogagalu:    
+        if x in gh.traits["yogagalu"].keys():
+            yoga_traits.append((x,gh.traits["yogagalu"][x],"inauspicious" if x in gh.inauspicious_yoga else ""))        
+        else:
+            yoga_traits.append((x,"","inauspicious" if x in gh.inauspicious_yoga else ""))
+    yoga_df16=pd.DataFrame(yoga_traits)
+   
+    context={
+        'df1_html':gh.ruthugalu,
+        'df2_html':gh.panchanga,
+        'nakshatra_df3_html':gh.nakshatra_df3.to_html(),
+        'rashi_df4_html':gh.rashi_df4.to_html(),
+        'graha_df5_html':gh.graha_df5.to_html(),
+        'pada_df6_html':gh.pada_df6.to_html(index=False,classes="nakshatra_pada"),
+        'panchanga_df7_html':gh.panchanga_df7,
+        'traits_df8_html':gh.traits,
+        'karana_df9_html':gh.karana_df9.to_html(index=False),
+        'yoga_df10_html':yoga_df16,
+        'tithi_df10_html':gh.tithi_df10.to_html(index=False),
+        'inauspicious_df_html':gh.inauspicious_df.to_html(),
+        'auspicious_df_html':gh.auspicious_data_df.to_html(index=False),
+        'chart_df11_html':gh.chart_df11.to_html(index=False),
+        'koota_df12_html':gh.ganakoota_df12.to_html(index=False),
+        'gkt_df13_html':gh.gkt_df13.to_html(),
+        'ndi_df14_html':gh.ndi_df14.to_html(),
+        'ndik_df15_html':gh.ndik_df15.to_html(index=False)
+    }
+   
+    return render(request,'basics.html',context)
+
+def hora(request):
+    gh=GanapathiHoraData()
+    pf=gh.boy_profile.copy()
+    sf=gh.nakshatra_df3.loc[gh.boy_profile["nakshatra"]].to_dict()
+    sf.pop("rashi")
+    pf.update(sf)
+    pf.update(gh.rashi_df4.loc[gh.boy_profile["rashi"]].to_dict())
+    pf.pop("nakshatragalu")
+    sp=[
+        [0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0]
+       ]
+     
+    sp_df=pd.DataFrame(sp,columns=[1,2,3,4,5,6,7,8,9,10,11,12],index=["surya","chandra","kuja","budha","Guru","Shukra","Shani","lagna"])
+
+    sp_dff={}
+    lag=["lagna"]
+    for h in gh.grahagalu+lag:
+        for x,y in gh.d1.items():        #loop through hora        
+                    if h in y:     #check whether particular planet is there or not in list
+                            sp1_list={1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,11:0,12:0}
+                            test_list = [1,2,3,4,5,6,7,8,9,10,11,12]
+                            K = (x-1)
+                            res = []
+                            for i in range(len(test_list)):
+                                res.append(test_list[K % len(test_list)])
+                                K = K + 1
+                            index_list=[]
+                            if h in list(gh.surya_prastharaka.keys()):
+                                for m in gh.surya_prastharaka[h]: # [1,2,4,7,8,9,10,11]
+                                    index_list.append(res[m-1])
+                                for t in index_list:
+                                    sp1_list[t]=1
+                                sp_dff[h]=list(sp1_list.values())
+
+    surya_prastharaka=pd.DataFrame(sp_dff,index=[1,2,3,4,5,6,7,8,9,10,11,12])
+    surya_prastharaka.loc["P.Tot"] = list(surya_prastharaka.sum()) # create vertical total
+    surya_prastharaka["R.Tot"]=list(surya_prastharaka.sum(axis=1)) # create horizontal total
+    
+    #chandra prastharaka
+    sp_dff={}
+    for h in gh.grahagalu+lag:
+        for x,y in gh.d1.items():        #loop through hora         
+                    if h in y:     #check whether particular planet is there or not in list
+                            sp1_list={1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,11:0,12:0}
+                            test_list = [1,2,3,4,5,6,7,8,9,10,11,12]
+                            K = (x-1)
+                            res = []
+                            for i in range(len(test_list)):
+                                res.append(test_list[K % len(test_list)])
+                                K = K + 1
+                            index_list=[]
+                            if h in list(gh.chandra_prastharaka.keys()):
+                                for m in gh.chandra_prastharaka[h]: # [1,2,4,7,8,9,10,11]
+                                    index_list.append(res[m-1])
+                                for t in index_list:
+                                    sp1_list[t]=1
+                                sp_dff[h]=list(sp1_list.values())
+
+    chandra_prastharaka=pd.DataFrame(sp_dff,index=[1,2,3,4,5,6,7,8,9,10,11,12])
+    chandra_prastharaka.loc["P.Tot"] = list(chandra_prastharaka.sum()) 
+    chandra_prastharaka["R.Tot"]=list(chandra_prastharaka.sum(axis=1)) 
+
+    #kuja prastharaka
+    sp_dff={}
+    for h in gh.grahagalu+lag:
+        for x,y in gh.d1.items():        #loop through hora       
+                    if h in y:     #check whether particular planet is there or not in list
+                            sp1_list={1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,11:0,12:0}
+                            test_list = [1,2,3,4,5,6,7,8,9,10,11,12]
+                            K = (x-1)
+                            res = []
+                            for i in range(len(test_list)):
+                                res.append(test_list[K % len(test_list)])
+                                K = K + 1
+                            index_list=[]
+                            if h in list(gh.kuja_prastharaka.keys()):
+                                for m in gh.kuja_prastharaka[h]: # [1,2,4,7,8,9,10,11]
+                                    index_list.append(res[m-1])
+                                for t in index_list:
+                                    sp1_list[t]=1
+                                sp_dff[h]=list(sp1_list.values())
+
+    kuja_prastharaka=pd.DataFrame(sp_dff,index=[1,2,3,4,5,6,7,8,9,10,11,12])
+    kuja_prastharaka.loc["P.Tot"] = list(kuja_prastharaka.sum()) 
+    kuja_prastharaka["R.Tot"]=list(kuja_prastharaka.sum(axis=1)) 
+
+    #budha prastharaka
+    sp_dff={}
+    for h in gh.grahagalu+lag:
+        for x,y in gh.d1.items():        #loop through hora         
+                    if h in y:     #check whether particular planet is there or not in list
+                            sp1_list={1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,11:0,12:0}
+                            test_list = [1,2,3,4,5,6,7,8,9,10,11,12]
+                            K = (x-1)
+                            res = []
+                            for i in range(len(test_list)):
+                                res.append(test_list[K % len(test_list)])
+                                K = K + 1
+                            index_list=[]
+                            if h in list(gh.budha_prastharaka.keys()):
+                                for m in gh.budha_prastharaka[h]: # [1,2,4,7,8,9,10,11]
+                                    index_list.append(res[m-1])
+                                for t in index_list:
+                                    sp1_list[t]=1
+                                sp_dff[h]=list(sp1_list.values())
+
+    budha_prastharaka=pd.DataFrame(sp_dff,index=[1,2,3,4,5,6,7,8,9,10,11,12])
+    budha_prastharaka.loc["P.Tot"] = list(budha_prastharaka.sum()) 
+    budha_prastharaka["R.Tot"]=list(budha_prastharaka.sum(axis=1)) 
+
+    #guru prastharaka
+    sp_dff={}
+    for h in gh.grahagalu+lag:
+        for x,y in gh.d1.items():        #loop through hora         
+                    if h in y:     #check whether particular planet is there or not in list
+                            sp1_list={1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,11:0,12:0}
+                            test_list = [1,2,3,4,5,6,7,8,9,10,11,12]
+                            K = (x-1)
+                            res = []
+                            for i in range(len(test_list)):
+                                res.append(test_list[K % len(test_list)])
+                                K = K + 1
+                            index_list=[]
+                            if h in list(gh.guru_prastharaka.keys()):
+                                for m in gh.guru_prastharaka[h]: # [1,2,4,7,8,9,10,11]
+                                    index_list.append(res[m-1])
+                                for t in index_list:
+                                    sp1_list[t]=1
+                                sp_dff[h]=list(sp1_list.values())
+
+    guru_prastharaka=pd.DataFrame(sp_dff,index=[1,2,3,4,5,6,7,8,9,10,11,12])
+    guru_prastharaka.loc["P.Tot"] = list(guru_prastharaka.sum()) 
+    guru_prastharaka["R.Tot"]=list(guru_prastharaka.sum(axis=1)) 
+
+    #shukra prastharaka
+    sp_dff={}
+    for h in gh.grahagalu+lag:
+        for x,y in gh.d1.items():        #loop through hora        
+                    if h in y:     #check whether particular planet is there or not in list
+                            sp1_list={1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,11:0,12:0}
+                            test_list = [1,2,3,4,5,6,7,8,9,10,11,12]
+                            K = (x-1)
+                            res = []
+                            for i in range(len(test_list)):
+                                res.append(test_list[K % len(test_list)])
+                                K = K + 1
+                            index_list=[]
+                            if h in list(gh.shukra_prastharaka.keys()):
+                                for m in gh.shukra_prastharaka[h]: # [1,2,4,7,8,9,10,11]
+                                    index_list.append(res[m-1])
+                                for t in index_list:
+                                    sp1_list[t]=1
+                                sp_dff[h]=list(sp1_list.values())
+
+    shukra_prastharaka=pd.DataFrame(sp_dff,index=[1,2,3,4,5,6,7,8,9,10,11,12])
+    shukra_prastharaka.loc["P.Tot"] = list(shukra_prastharaka.sum()) 
+    shukra_prastharaka["R.Tot"]=list(shukra_prastharaka.sum(axis=1)) 
+
+    #shani prastharaka
+    sp_dff={}
+    for h in gh.grahagalu+lag:
+        for x,y in gh.d1.items():        #loop through hora         
+                    if h in y:     #check whether particular planet is there or not in list
+                            sp1_list={1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,11:0,12:0}
+                            test_list = [1,2,3,4,5,6,7,8,9,10,11,12]
+                            K = (x-1)
+                            res = []
+                            for i in range(len(test_list)):
+                                res.append(test_list[K % len(test_list)])
+                                K = K + 1
+                            index_list=[]
+                            if h in list(gh.shani_prastharaka.keys()):
+                                for m in gh.shani_prastharaka[h]: # [1,2,4,7,8,9,10,11]
+                                    index_list.append(res[m-1])
+                                for t in index_list:
+                                    sp1_list[t]=1
+                                sp_dff[h]=list(sp1_list.values())
+
+    shani_prastharaka=pd.DataFrame(sp_dff,index=[1,2,3,4,5,6,7,8,9,10,11,12])
+    shani_prastharaka.loc["P.Tot"] = list(shani_prastharaka.sum()) 
+    shani_prastharaka["R.Tot"]=list(shani_prastharaka.sum(axis=1)) 
+
+    # create sarvashtaka varga
+    sarva_p={
+        gh.grahagalu[0]:surya_prastharaka["R.Tot"],
+        gh.grahagalu[1]:chandra_prastharaka["R.Tot"],
+        gh.grahagalu[2]:kuja_prastharaka["R.Tot"],
+        gh.grahagalu[3]:budha_prastharaka["R.Tot"],
+        gh.grahagalu[4]:guru_prastharaka["R.Tot"],
+        gh.grahagalu[5]:shukra_prastharaka["R.Tot"],
+        gh.grahagalu[6]:shani_prastharaka["R.Tot"]
+    }
+    sarva_df=pd.DataFrame(sarva_p)
+    sarva_df["R.Tot"]=list(sarva_df.sum(axis=1)) 
+
+    ekadipathya={
+        gh.grahagalu[0]:list(surya_prastharaka["R.Tot"].drop(labels=["P.Tot"])),
+        gh.grahagalu[1]:list(chandra_prastharaka["R.Tot"].drop(labels=["P.Tot"])),
+        gh.grahagalu[2]:list(kuja_prastharaka["R.Tot"].drop(labels=["P.Tot"])),
+        gh.grahagalu[3]:list(budha_prastharaka["R.Tot"].drop(labels=["P.Tot"])),
+        gh.grahagalu[4]:list(guru_prastharaka["R.Tot"].drop(labels=["P.Tot"])),
+        gh.grahagalu[5]:list(shukra_prastharaka["R.Tot"].drop(labels=["P.Tot"])),
+        gh.grahagalu[6]:list(shani_prastharaka["R.Tot"].drop(labels=["P.Tot"]))
+    }
+    ekadipathya_df=pd.DataFrame(ekadipathya,index=[1,2,3,4,5,6,7,8,9,10,11,12])
+
+    for s in gh.grahagalu[:7]:
+            ekd_sub=[0,0,0,0,0,0,0,0,0,0,0,0]
+            res_list=list(ekadipathya[s])   
+            
+            ekd_sub[0]=ekd_sub[4]=ekd_sub[8] = min([res_list[i] for i in [0,4,8]])
+            ekd_sub[1]=ekd_sub[5]=ekd_sub[9] = min([res_list[i] for i in [1,5,9]])
+            ekd_sub[2]=ekd_sub[6]=ekd_sub[10] =min([res_list[i] for i in [2,6,10]])
+            ekd_sub[3]=ekd_sub[7]=ekd_sub[11] = min([res_list[i] for i in [3,7,11]])
+            ekadipathya_df[s+"_diff"]=ekd_sub
+
+
+            ekadipathya_df[s+'_result'] = ekadipathya_df.apply(lambda x: x[s] - x[s+'_diff'], axis=1) 
+    
+    context={
+        'profile_html':pf,
+        'details':gh.traits["rashi"][gh.boy_profile["rashi"]],
+        'karana':gh.traits["karana"][gh.boy_profile["karana"]],
+        'd1':gh.d1,
+        'yoga':gh.traits["yogagalu"][gh.boy_profile["yoga"]],
+        'su_p':surya_prastharaka.transpose().to_html(classes="r_c_highlight"),
+        'ch_p':chandra_prastharaka.transpose().to_html(classes="r_c_highlight"),
+        'kj_p':kuja_prastharaka.transpose().to_html(classes="r_c_highlight"),
+        'bd_p':budha_prastharaka.transpose().to_html(classes="r_c_highlight"),
+        'gu_p':guru_prastharaka.transpose().to_html(classes="r_c_highlight"),
+        'sk_p':shukra_prastharaka.transpose().to_html(classes="r_c_highlight"),
+        'sn_p':shani_prastharaka.transpose().to_html(classes="r_c_highlight"),
+        'su_p_n':[list(surya_prastharaka["R.Tot"]), sum(surya_prastharaka.loc["P.Tot"].drop(labels=["R.Tot"])) == sum(surya_prastharaka["R.Tot"].drop(labels=["P.Tot"]))],
+        'ch_p_n':[list(chandra_prastharaka["R.Tot"]), sum(chandra_prastharaka.loc["P.Tot"].drop(labels=["R.Tot"])) == sum(chandra_prastharaka["R.Tot"].drop(labels=["P.Tot"]))],
+        'kj_p_n':[list(kuja_prastharaka["R.Tot"]), sum(kuja_prastharaka.loc["P.Tot"].drop(labels=["R.Tot"])) == sum(kuja_prastharaka["R.Tot"].drop(labels=["P.Tot"]))],
+        'bd_p_n':[list(budha_prastharaka["R.Tot"]), sum(budha_prastharaka.loc["P.Tot"].drop(labels=["R.Tot"])) == sum(budha_prastharaka["R.Tot"].drop(labels=["P.Tot"]))],
+        'gu_p_n':[list(guru_prastharaka["R.Tot"]), sum(guru_prastharaka.loc["P.Tot"].drop(labels=["R.Tot"])) == sum(guru_prastharaka["R.Tot"].drop(labels=["P.Tot"]))],
+        'sk_p_n':[list(shukra_prastharaka["R.Tot"]), sum(shukra_prastharaka.loc["P.Tot"].drop(labels=["R.Tot"])) == sum(shukra_prastharaka["R.Tot"].drop(labels=["P.Tot"]))],
+        'sn_p_n':[list(shani_prastharaka["R.Tot"]), sum(shani_prastharaka.loc["P.Tot"].drop(labels=["R.Tot"])) == sum(shani_prastharaka["R.Tot"].drop(labels=["P.Tot"]))],
+        'sarva_p_n':[list(sarva_df["R.Tot"]), sum(sarva_df.loc["P.Tot"].drop(labels=["R.Tot"])) == sum(sarva_df["R.Tot"].drop(labels=["P.Tot"]))==337],
+        'sarva':sarva_df.transpose().to_html(classes="r_c_highlight"),
+        'ekadi_df':[ekadipathya_df,sum(ekadipathya_df["Surya_result"]),sum(ekadipathya_df["Chandra_result"]),sum(ekadipathya_df["Kuja_result"]),sum(ekadipathya_df["Budha_result"]),sum(ekadipathya_df["Guru_result"]),sum(ekadipathya_df["Shukra_result"]),sum(ekadipathya_df["Shani_result"])]
+    }
+
+    return render(request,'hora.html',context)
+
+def recommendations(request):
+    gh=GanapathiHoraData()
+    year=2023
+    month=9 #start of month
+    end_month=11 # to end
+    current_day=datetime.date(year,month,1)
+    day_date_list=[]
+  
+    while current_day.month==month:
+        
+        day_date_list.append([current_day.strftime("%A"),current_day.strftime("%d-%m-%Y")])
+        current_day += datetime.timedelta(days=1)
+
+
+    i=0
+    startIndex=17
+    
+    temp= gh.tithigalu["shukla paksha"] | gh.tithigalu["krishna paksha"]
+    z=len(temp)
+
+    while i < 30:       
+        if startIndex==30:
+            day_date_list[i].append(temp[30])         
+        else:
+            j=startIndex%z
+            day_date_list[i].append(temp[j])          
+        i += 1
+        startIndex +=1
+    
+    for idx,x in enumerate(day_date_list):
+            if x[0].lower()==gh.vaaragalu[5] and x[2].lower() in gh.nanda_tithi:            
+                day_date_list[idx].append("Auspicious")
+                day_date_list[idx].append("Nanda tithi")
+            elif x[0].lower()==gh.vaaragalu[3].lower() and x[2].lower() in gh.bhadra_tithi: 
+                day_date_list[idx].append("Auspicious")
+                day_date_list[idx].append("Bhadra tithi")
+            elif x[0].lower()==gh.vaaragalu[2].lower() and x[2].lower() in gh.jaya_tithi:
+                day_date_list[idx].append("Auspicious")
+                day_date_list[idx].append("Jaya tithi")
+            elif x[0].lower()==gh.vaaragalu[6].lower() and x[2].lower() in gh.riktha_tithi:   
+                day_date_list[idx].append("Auspicious")
+                day_date_list[idx].append("Riktha tithi")
+            elif x[0].lower()==gh.vaaragalu[4].lower() and x[2].lower() in gh.poorna_tithi:
+                day_date_list[idx].append("Auspicious")
+                day_date_list[idx].append("Poorna tithi")
+            else:pass
+
+
+    context={
+        'df_html':day_date_list
+    }
+    return render(request,'recommendations.html',context)
+
+def compatibility(request):
+    gh=GanapathiHoraData()
+    
+    result=""
+    if gh.girl_profile["gana"]==gh.boy_profile["gana"]:
+        result="uttama"
+    elif gh.girl_profile["gana"]==gh.ganagalu[0] and gh.boy_profile["gana"]==gh.ganagalu[1]:
+        result="madhyama"
+    elif gh.girl_profile["gana"]==gh.ganagalu[0] and gh.boy_profile["gana"]==gh.ganagalu[2]:
+        result="adhama"
+    elif gh.girl_profile["gana"]==gh.ganagalu[1] and gh.boy_profile["gana"]==gh.ganagalu[2]:
+        result="ashubha"
+    elif gh.girl_profile["gana"]==gh.ganagalu[2] and gh.boy_profile["gana"]==gh.ganagalu[2]:
+        result="Not compatible"
+    else:pass
+
+    nadi_result=""
+    if gh.girl_profile["nadi"]==gh.boy_profile["nadi"]:
+        if gh.girl_profile["rashi"]==gh.boy_profile["rashi"]:
+            nadi_result="shubha"
+        elif gh.girl_profile["nakshatra"]==gh.boy_profile["nakshatra"]:
+            nadi_result="shubha"
+        else:
+            nadi_result="ashubha"
+    else:
+        nadi_result="shubha"
+
+    points=[
+        ("varna koota",0,1,""),
+        ("vashya koota",0,2,""),
+        ("dina koota",0,3,""),
+        ("yoni koota",0,4,""),
+        ("graha maitri koota",0,5,""),
+        ("ganakoota",gh.gkt_df13[gh.boy_profile["gana"]][gh.girl_profile["gana"]],6,result),
+        ("rashi koota",0,7,""),
+        ("naadikoota",gh.ndi_df14[gh.boy_profile["nadi"]][gh.girl_profile["nadi"]],8,nadi_result),
+        
+    ]
+
+    xa=0
+
+    for i in range(len(points)):
+	    xa=xa+points[i][1]
+    points.append(("Total score",xa,36,""))
+    profile_data={
+        "girl":gh.girl_profile,
+        "boy":gh.boy_profile
+    }
+    
+    context={
+        'profile_html':pd.DataFrame(profile_data).to_html(),
+        'df_html':points
+    }
+    x=gh.nakshatra_df3.loc[gh.nakshatragalu[2]]
+
+    return render(request,'compatibility.html',context)
+
+def medicalastrology(request):
+    return render(request,"medicalastrology.html")
+
+def vasthu(request):
+    return render(request,"vasthu.html")
